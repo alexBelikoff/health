@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Health{% endblock %}</title>
+        <meta name="description" content="{% block description %}{% endblock %}" />
+        <meta name="keywords" content="{% block keywords %}{% endblock %}" />
+        {% block stylesheets %}
+
+            {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+
+
+        {% endblock %}        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+    <div class="container">
+            {% block menu %}
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="{ path('homepage') }}">Health</a>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ path('fos_user_security_login') }}">Войти</a></li>
+                            <li><a href="{{ path('fos_user_registration_register') }}">Зарегистрироваться</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            {% endblock %}
+        <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashBag.all %}
+                {% for message in messages %}
+                    <div class="{{ type }}">
+                        {{ message|trans({}, 'FOSUserBundle') }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+
+
+                    {% block body %}
+                        {% block fos_user_content %}
+                        {% endblock fos_user_content %}
+                    {% endblock %}
+
+            </div>            
+
+
+
+        {% block javascripts  %}
+            {% javascripts '@AppBundle/Resources/public/js/jquery-1.12.0.min.js'
+            '@AppBundle/Resources/public/js/jquery-ui.min.js'
+            '@AppBundle/Resources/public/js/bootstrap.js'
+            '@AppBundle/Resources/public/js/main.js'
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}        
+    </body>
+</html>
+
+

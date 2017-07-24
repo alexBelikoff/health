@@ -50,6 +50,28 @@ class Patient
      */
     private $birthDate;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="gender", type="smallint", nullable=true)
+     */
+    private $gender;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="height", type="smallint", nullable=true)
+     */
+    private $height;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=32, nullable=true)
+     */
+    private $phone;
+
 
     /**
      * @ORM\OneToOne(targetEntity="User", mappedBy="patient")
@@ -273,5 +295,77 @@ class Patient
     public function getDoctors()
     {
         return $this->doctors;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param integer $gender
+     *
+     * @return Patient
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return integer
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set height
+     *
+     * @param integer $height
+     *
+     * @return Patient
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * Get height
+     *
+     * @return integer
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return Patient
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 }

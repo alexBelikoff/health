@@ -61,6 +61,13 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
+vich_uploader:
+    db_driver: orm
+    mappings:
+        doctor_image:
+            uri_prefix:         /img/specialists
+            upload_destination: '%kernel.root_dir%/../web/img/specialists'
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'

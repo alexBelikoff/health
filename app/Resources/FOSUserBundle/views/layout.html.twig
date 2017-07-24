@@ -2,33 +2,28 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Health{% endblock %}</title>
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('bundles/app/img/favicons/apple-touch-icon-57x57.png') }}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('bundles/app/img/favicons/apple-touch-icon-60x60.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('bundles/app/img/favicons/favicon-32x32.png') }}" sizes="32x32">
+        <link rel="icon" type="image/png" href="{{ asset('bundles/app/img/favicons/favicon-16x16.png') }}" sizes="16x16">
+        <link rel="manifest" href="{{ asset('bundles/app/img/favicons/manifest.json') }}">
+        <link rel="shortcut icon" href="{{ asset('bundles/app/img/favicons/favicon.ico') }}">
         <meta name="description" content="{% block description %}{% endblock %}" />
         <meta name="keywords" content="{% block keywords %}{% endblock %}" />
         {% block stylesheets %}
-
             {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
-
-
-        {% endblock %}        
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% endblock %}
+    </head>
     </head>
     <body>
     <div class="container">
             {% block menu %}
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="{ path('homepage') }}">Health</a>
-                        </div>
-                        <ul class="nav navbar-nav">
-                            <li><a href="{{ path('fos_user_security_login') }}">Войти</a></li>
-                            <li><a href="{{ path('fos_user_registration_register') }}">Зарегистрироваться</a></li>
-                        </ul>
-                    </div>
-                </nav>
+
             {% endblock %}
         <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -58,19 +53,27 @@
                         {% endblock fos_user_content %}
                     {% endblock %}
 
-            </div>            
+            </div>
 
 
 
-        {% block javascripts  %}
-            {% javascripts '@AppBundle/Resources/public/js/jquery-1.12.0.min.js'
-            '@AppBundle/Resources/public/js/jquery-ui.min.js'
-            '@AppBundle/Resources/public/js/bootstrap.js'
-            '@AppBundle/Resources/public/js/main.js'
-            %}
-                <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}        
+    {% block javascripts  %}
+        {% javascripts '@AppBundle/Resources/public/js/jquery-1.12.0.min.js'
+        '@AppBundle/Resources/public/js/jquery-ui.min.js'
+        '@AppBundle/Resources/public/js/jquery.datetimepicker.min.js'
+        '@AppBundle/Resources/public/js/bootstrap.js'
+        '@AppBundle/Resources/public/js/owl.carousel.min.js'
+        '@AppBundle/Resources/public/js/wow.min.js'
+        '@AppBundle/Resources/public/js/typewriter.js'
+        '@AppBundle/Resources/public/js/jquery.onepagenav.js'
+
+
+        '@AppBundle/Resources/public/js/main.js'
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.1/TweenMax.min.js'></script>
+    {% endblock %}
     </body>
 </html>
 

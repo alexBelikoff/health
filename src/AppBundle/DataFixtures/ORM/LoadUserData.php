@@ -29,6 +29,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $encoder = $this->container->get('security.password_encoder');
         $password = $encoder->encodePassword($user, 'patient1');
         $user->setPassword($password);
+        $user->setEnabled(true);
 
 
 
@@ -43,15 +44,17 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $patient->setFirstName('Алексей');
         $patient->setLastName('Алексеев');
         $patient->setSecondName('Алексеевич');
+        $patient->setGender(1);
+        $patient->setHeight('183');
         $manager->persist($patient);
         $manager->flush();
 
         $measuringDate = new \DateTime();
         $measuringDate->setDate(2017,01, 02);
-        for($i = 0, $j = 497; $i < $j; ++$i){
-            $weight = 70;
+        for($i = 0, $j = 797; $i < $j; ++$i){
+            $weight = 80;
             $measuring = new Measuring();
-            $measuring->setValue($weight + rand(-5, 5));
+            $measuring->setValue($weight + rand(-2, 2));
             $measuring->setType($type);
             $measuringDate->add(new \DateInterval('PT5H30S'));
             $measuringDate->format('Y-m-d H:i:s');

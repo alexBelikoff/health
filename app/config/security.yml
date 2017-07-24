@@ -15,7 +15,12 @@ security:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
+                success_handler: authentication_handler
+                failure_handler: authentication_handler
                 csrf_token_generator: security.csrf.token_manager
+            #form_login:
+                #provider: fos_userbundle
+                #csrf_token_generator: security.csrf.token_manager
 
             logout:       true
             anonymous:    true

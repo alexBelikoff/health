@@ -2,6 +2,9 @@
     $('#_submit').click(function(e){
         e.preventDefault();
         $.ajax({
+            beforeSend: function(xhrObj){
+                xhrObj.setRequestHeader("X-Requested-With","XMLHttpRequest");
+            },
             type        : $('form').attr( 'method' ),
             url         : $('form').attr( 'action' ),
             data        : $('form').serialize(),
@@ -58,8 +61,8 @@
         <div class="modal-content modal-popup">
             <a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
             <h3 class="white">Войти</h3>
-            <form action="{{ path("fos_user_security_check") }}" method="post" class="popup-form">
-                {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />#}
+            <form action="{{ path("fos_user_security_check") }}" method="POST" class="popup-form">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                 <input type="text" class="form-control form-white" id="username" name="_username" value="" required="required" placeholder="Логин">
                 <input type="password" id="password" name="_password" required="required" class="form-control form-white" placeholder="Пароль">
 

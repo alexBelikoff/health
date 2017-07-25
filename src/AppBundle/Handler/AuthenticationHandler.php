@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\VarDumper\VarDumper;
 
 
 class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, AuthenticationFailureHandlerInterface
@@ -38,7 +39,9 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, Au
 
     }
     public function onAuthenticationSuccess(Request $request, TokenInterface $token) {
+        $dumper = new VarDumper();
         if ($request->isXmlHttpRequest()) {
+            $dumper->dump('isXmlHttpRequest');
             $targetUrl = $request->getSession()->get('_security.target_path');
             $result = array('success' => true, 'targetUrl' => targetUrl );
             $response = new Response(json_encode($result));
@@ -46,9 +49,10 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, Au
             return $response;
         }
         else {
+            $dumper->dump('is NOT! XmlHttpRequest');
             // Create a flash message with the authentication error message
-            $request->getSession()->getFlashBag()->set('error', $exception->getMessage());
-            $url = $this->router->generate('fos_user_security_login');
+            //$request->getSession()->getFlashBag()->set('error', $exception->getMessage());
+            $url = $this->router->generate('homepage');
 
             return new RedirectResponse($url);
         }

@@ -371,7 +371,8 @@
         </div>
     </div>
 </section>
-{{ include('::modalLogin.html.twig') }}
+{#{ include('::modalLogin.html.twig') }#}
+   {{ render(controller('AppBundle:Security:login')) }}
 <footer>
     <div class="container">
         <div class="row">

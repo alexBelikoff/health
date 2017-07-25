@@ -21,16 +21,16 @@ class Measuring
 
 
     /**
-     * @var date
+     * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="measuring_date", type="datetime")
      */
     private $date;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=32)
+     * @ORM\Column(name="measuring_value", type="string", length=32)
      */
     private $value;
 

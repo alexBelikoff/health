@@ -1,0 +1,65 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+            {% block menu %}
+                {{ include('AppBundle::menu.html.twig') }}
+            {% endblock %}
+
+{% block body %}
+
+    <div style="margin-top: 100px;">
+
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#chart" aria-controls="chart" role="tab" data-toggle="tab">График</a></li>
+            <li role="presentation"><a href="#mtable" aria-controls="mtable" role="tab" data-toggle="tab">Таблица</a></li>
+
+        </ul>
+
+
+        <div class="tab-content">
+
+            <div role="tabpanel" class="tab-pane active" id="chart">
+                <div id="container" class="container well" data-highcharts-chart="0"></div>
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="mtable">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Дата</th><th>Вес</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for meas in measuring %}
+                        <tr>
+                            <td>{{ meas.date|date("d.m.Y H:i") }}</td>
+                            <td>{{ meas.value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts  %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/jquery.datetimepicker.min.js') }}"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+    $(function(){
+    //var url = Routing.generate('cabinet');
+        $.post('/cabinet', function(data) {
+          console.log(data.measuring);
+        });
+    });
+
+
+</script>
+
+{% endblock %}

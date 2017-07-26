@@ -76,17 +76,7 @@ jQuery(function($) {
         });
 
 
-        var svg = document.getElementById("Layer_1"),
-            viewbox = svg.getAttribute('viewBox').split(' ');
 
-        var t = new TimelineLite();
-
-        t.add(TweenMax.from(svg, 4, {attr:{width:0}, onUpdate:cropWidth, ease:Linear.easeNone, repeat: -1}));
-
-        function cropWidth() {
-            viewbox[2] = parseFloat(this.target.getAttribute('width'), 10);
-            svg.setAttribute('viewBox', viewbox.join(' '));
-        }
     });
     // Window Scroll
     function onScroll() {

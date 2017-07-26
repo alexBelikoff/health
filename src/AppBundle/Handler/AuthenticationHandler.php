@@ -52,7 +52,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, Au
             $dumper->dump('is NOT! XmlHttpRequest');
             // Create a flash message with the authentication error message
             //$request->getSession()->getFlashBag()->set('error', $exception->getMessage());
-            $url = $this->router->generate('homepage');
+            $url = $this->router->generate('cabinet');
 
             return new RedirectResponse($url);
         }

@@ -2,9 +2,10 @@
     $('#_submit').click(function(e){
         e.preventDefault();
         $.ajax({
-            beforeSend: function(xhrObj){
+            /*beforeSend: function(xhrObj){
                 xhrObj.setRequestHeader("X-Requested-With","XMLHttpRequest");
-            },
+            },*/
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
             type        : $('form').attr( 'method' ),
             url         : $('form').attr( 'action' ),
             data        : $('form').serialize(),
@@ -72,7 +73,7 @@
                         <label for="remember_me"><span>Запомнить меня</span></label>
                     </div>
                 </div>
-                <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-primary">
+                <input type="submit" id="_submit" name="_submit" value="Войти" class="btn btn-primary">
             </form>
         </div>
     </div>

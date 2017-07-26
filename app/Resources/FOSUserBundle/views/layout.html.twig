@@ -14,9 +14,16 @@
         <meta name="description" content="{% block description %}{% endblock %}" />
         <meta name="keywords" content="{% block keywords %}{% endblock %}" />
         {% block stylesheets %}
-            {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
+            <link rel="stylesheet" href="{{ 'bundles/app/css/normalize.css' }}" />
+            <link rel="stylesheet" href="{{ 'bundles/app/css/bootstrap.min.css' }}" />
+            <link rel="stylesheet" href="{{ 'bundles/app/css/bootstrap-theme.min.css' }}" />
+            <link rel="stylesheet" href="{{ 'bundles/app/css/jquery-ui.theme.min.css' }}" />
+            <link rel="stylesheet" href="{{ 'bundles/app/css/jquery.datetimepicker.css' }}" />
+            <link rel="stylesheet" href="{{ 'bundles/app/css/animate.css' }}" />
+            <link rel="stylesheet" href="{{ 'bundles/app/css/et-icons.css' }}" />
+            <link rel="stylesheet" href="{{ 'bundles/app/css/owl.css' }}" />
+            <link rel="stylesheet" href="{{ 'bundles/app/css/cardio.css' }}" />
+            <link rel="stylesheet" href="{{ 'bundles/app/css/main.css' }}" />
         {% endblock %}
     </head>
     </head>
@@ -25,7 +32,7 @@
             {% block menu %}
 
             {% endblock %}
-        <div>
+        {#<div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                 <a href="{{ path('fos_user_security_logout') }}">
@@ -34,7 +41,7 @@
             {% else %}
                 <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
             {% endif %}
-        </div>
+        </div>#}
 
         {% if app.request.hasPreviousSession %}
             {% for type, messages in app.session.flashBag.all %}
@@ -58,21 +65,12 @@
 
 
     {% block javascripts  %}
-        {% javascripts '@AppBundle/Resources/public/js/jquery-1.12.0.min.js'
-        '@AppBundle/Resources/public/js/jquery-ui.min.js'
-        '@AppBundle/Resources/public/js/jquery.datetimepicker.min.js'
-        '@AppBundle/Resources/public/js/bootstrap.js'
-        '@AppBundle/Resources/public/js/owl.carousel.min.js'
-        '@AppBundle/Resources/public/js/wow.min.js'
-        '@AppBundle/Resources/public/js/typewriter.js'
-        '@AppBundle/Resources/public/js/jquery.onepagenav.js'
+        <script src="{{ asset('bundles/app/js/jquery-1.12.0.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-
-        '@AppBundle/Resources/public/js/main.js'
-        %}
-        <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.1/TweenMax.min.js'></script>
     {% endblock %}
     </body>
 </html>

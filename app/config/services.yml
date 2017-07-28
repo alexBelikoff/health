@@ -36,3 +36,6 @@ services:
     authentication_handler:
         class:        AppBundle\Handler\AuthenticationHandler
         arguments:    ['@router', '@security.token_storage', '@fos_user.user_manager', '@service_container']
+
+    health.measuring_model:
+      class: AppBundle\Model\MeasuringModel

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="health_measuring_fix")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MeasuringRepository")
  */
 class Measuring
 {

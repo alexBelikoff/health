@@ -1,0 +1,29 @@
+<section id="team" class="section gray-bg">
+    <div class="container">
+        <div class="row title text-center">
+            <h2 class="margin-top">Наши специалисты</h2>
+            <h4 class="light muted">Лучше вы не найдете!</h4>
+        </div>
+        <div class="row">
+            {% for spec in specialists %}
+                <div class="col-md-4">
+                    <div class="team text-center">
+                        <div class="cover" style="background:url('img/team/{{  spec.imageName}}'); background-size:cover;">
+                            <div class="overlay text-center">
+                                <h3 class="white">$69.00</h3>
+                                <h5 class="light light-white">1 - 5 sessions / month</h5>
+                            </div>
+                        </div>
+                        <img src="{{ vich_uploader_asset(spec, 'imageFile') }}" alt="{{ spec.firstName }}" class="avatar">
+                        <div class="title">
+                            <h4>{{ spec.firstName }}  {{ spec.lastName }}</h4>
+                            <h5 class="muted regular">{{ spec.title }}</h5>
+                        </div>
+                        <button data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill">Записаться</button>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,88 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block menu %}
+    {{ include('AppBundle::menu.html.twig') }}
+{% endblock %}
+
+{% block body %}
+<div  class="container" style="margin-top: 150px;">
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#my_spec" aria-controls="my_spec" role="tab" data-toggle="tab">Мои специалисты</a></li>
+        <li role="presentation"><a href="#all_spec" aria-controls="all_spec" role="tab" data-toggle="tab">Все специалисты</a></li>
+
+    </ul>
+
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane active" id="my_spec">
+            <section id="team" class="section gray-bg">
+                <div class="container">
+                    <div class="row title text-center">
+                        <h4 class="light muted">Мои специалисты</h4>
+                    </div>
+                    <div class="row">
+                        {% for doctor in doctors %}
+                            <div class="col-md-4">
+                                <div class="team text-center">
+                                    <div class="cover" style="background:url('img/team/{{  doctor.imageName}}'); background-size:cover;">
+                                        <div class="overlay text-center">
+                                            <h3 class="white">$69.00</h3>
+                                            <h5 class="light light-white">1 - 5 sessions / month</h5>
+                                        </div>
+                                    </div>
+                                    <img src="{{ vich_uploader_asset(doctor, 'imageFile') }}" alt="{{ doctor.firstName }}" class="avatar">
+                                    <div class="title">
+                                        <h4>{{ doctor.firstName }} {{ doctor.lastName }}</h4>
+                                        <h5 class="muted regular">{{ doctor.title }}</h5>
+                                    </div>
+                                    <a href="{{ path('cabinet_specialists_remove_one', {'doctor': doctor.id}) }}"   class="btn btn-blue-fill">Прекратить сотрудничество</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="all_spec">
+            <div class="list-group">
+                {% for all_doctor in all_doctors %}
+                    <div class="list-group-item">
+                        <div class="list-group-item-heading">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="{{ vich_uploader_asset(all_doctor, 'imageFile') }}" alt="{{ all_doctor.firstName }}"
+                                         class="avatar img-circle" style="width: 60px;">
+                                </div>
+                                <div class="col-md-10">
+                                    <h4 class="">{{ all_doctor.firstName }} {{ all_doctor.lastName }} {{ all_doctor.secondName }}</h4>
+                                    <h6 class="">{{ all_doctor.title }}</h6>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="list-group-item-text">
+                            {{ all_doctor.description }}
+                            <div class="row">
+                                <div class="col-md-2">
+                                    {% if all_doctor.id not in my_doctor_ids %}
+                                    <a href="{{ path('cabinet_specialists_add_one', {'doctor': all_doctor.id}) }}" class="list-group-item btn">записаться</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
+

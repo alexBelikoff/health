@@ -38,6 +38,9 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        #['bootstrap_3_layout.html.twig']
+        ['bootstrap_3_horizontal_layout.html.twig']
 
 # Doctrine Configuration
 doctrine:
@@ -67,6 +70,9 @@ vich_uploader:
         doctor_image:
             uri_prefix:         /img/specialists
             upload_destination: '%kernel.root_dir%/../web/img/specialists'
+        patient_image:
+            uri_prefix:         /img/users
+            upload_destination: '%kernel.root_dir%/../web/img/users'
 
 # Swiftmailer Configuration
 swiftmailer:

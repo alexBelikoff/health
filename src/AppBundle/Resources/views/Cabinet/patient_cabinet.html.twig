@@ -1,0 +1,125 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+            {% block menu %}
+                {{ include('AppBundle::menu.html.twig') }}
+            {% endblock %}
+
+{% block body %}
+
+    <div  class="container" style="margin-top: 150px;">
+
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#chart" aria-controls="chart" role="tab" data-toggle="tab">График</a></li>
+            <li role="presentation"><a href="#mtable" aria-controls="mtable" role="tab" data-toggle="tab">Таблица</a></li>
+
+        </ul>
+
+
+        <div class="tab-content">
+
+            <div role="tabpanel" class="tab-pane active" id="chart" style="width: 100%; margin-top: 20px;">
+                <div id="container" class="container well" data-highcharts-chart="0"></div>
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="mtable">
+                <div class="container well">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Дата</th><th>Вес</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for meas in measuring %}
+                        <tr>
+                            <td>{{ meas.date|date("d.m.Y H:i") }}</td>
+                            <td>{{ meas.value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts  %}
+    {{ parent() }}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+    $(function(){
+    var url = Routing.generate('cabinet');
+        $.post(url, function(data) {
+            var measuring = data.measuring;
+            Highcharts.chart('container', {
+                chart: {
+                    zoomType: 'x'
+                },
+                title: {
+                    text: 'Вес'
+                },
+
+                subtitle: {
+                    text: 'Кликните и виделите область диаграммы, чтобы увеличить маштаб'
+                },
+
+                xAxis: {
+                    type: 'datetime',
+                    title: {
+                        text: 'Значение'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Дата'
+                    },
+                },
+                legend: {
+                    /*layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',*/
+                    enabled: false
+                },
+                plotOptions: {
+                    area: {
+                        fillColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, Highcharts.getOptions().colors[0]],
+                                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                            ]
+                        },
+                        marker: {
+                            radius: 2
+                        },
+                        lineWidth: 1,
+                        states: {
+                            hover: {
+                                lineWidth: 1
+                            }
+                        },
+                        threshold: null
+                    }
+                },
+                series: [{
+                    type: 'area',
+                    name: 'Динамика значений веса',
+                    data: measuring
+                }]
+            });
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+            {% block menu %}
+                {{ include('AppBundle::menu.html.twig') }}
+            {% endblock %}
+
+{% block body %}
+    <div  class="container" style="margin-top: 150px;">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{ vich_uploader_asset(patient, 'imageFile') }}" alt="{{ patient.firstName }}" class="avatar img-circle">
+            </div>
+            <div class="col-md-10">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts  %}
+    {{ parent() }}
+    <script src="{{ asset('/bundles/app/js/jquery.datetimepicker.full.min.js') }}"></script>
+    <script src="{{ asset('/bundles/app/js/jquery.maskedinput.min.js') }}"></script>
+
+    <script>
+        $(function(){
+            //$('form #measuring_date').datetimepicker();
+            $('form[name=patient] input').prop('disabled', true);
+            $('form[name=patient] select').prop('readonly', true);
+            $('form[name=patient] #patient_save').hide();
+            $("form[name=patient] #patient_phone").mask("(999) 999-9999");
+
+            $('form[name=patient] #patient_edit').on('click', function(){
+                $('form[name=patient] #patient_save').show();
+                $('form[name=patient] input').prop('disabled', false);
+                $('form[name=patient] select').prop('readonly', false);
+                $(this).hide();
+            });
+
+            $('form #patient_birthDate').datetimepicker();
+        });
+    </script>
+
+{% endblock %}

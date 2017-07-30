@@ -1,0 +1,12 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+            {% block menu %}
+                {{ include('AppBundle::menu.html.twig') }}
+            {% endblock %}
+
+{% block body %}
+    <div  class="container" style="margin-top: 150px;">
+    <h1>Кабинет доктора</h1>
+    <img src="{{ vich_uploader_asset(doctor, 'imageFile') }}" alt="{{ doctor.firstName }}" />
+    <span>{{ doctor.firstName }}</span>
+    </div>
+{% endblock %}

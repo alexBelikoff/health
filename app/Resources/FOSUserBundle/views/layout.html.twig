@@ -14,16 +14,16 @@
         <meta name="description" content="{% block description %}{% endblock %}" />
         <meta name="keywords" content="{% block keywords %}{% endblock %}" />
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ 'bundles/app/css/normalize.css' }}" />
-            <link rel="stylesheet" href="{{ 'bundles/app/css/bootstrap.min.css' }}" />
-            <link rel="stylesheet" href="{{ 'bundles/app/css/bootstrap-theme.min.css' }}" />
-            <link rel="stylesheet" href="{{ 'bundles/app/css/jquery-ui.theme.min.css' }}" />
-            <link rel="stylesheet" href="{{ 'bundles/app/css/jquery.datetimepicker.css' }}" />
-            <link rel="stylesheet" href="{{ 'bundles/app/css/animate.css' }}" />
-            <link rel="stylesheet" href="{{ 'bundles/app/css/et-icons.css' }}" />
-            <link rel="stylesheet" href="{{ 'bundles/app/css/owl.css' }}" />
-            <link rel="stylesheet" href="{{ 'bundles/app/css/cardio.css' }}" />
-            <link rel="stylesheet" href="{{ 'bundles/app/css/main.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/normalize.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/bootstrap.min.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/bootstrap-theme.min.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/jquery-ui.theme.min.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/jquery.datetimepicker.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/animate.min.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/et-icons.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/owl.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/cardio.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/main.css' }}" />
         {% endblock %}
     </head>
     </head>
@@ -65,10 +65,10 @@
 
 
     {% block javascripts  %}
-        <script src="{{ asset('bundles/app/js/jquery-1.12.0.min.js') }}"></script>
-        <script src="{{ asset('bundles/app/js/jquery-ui.min.js') }}"></script>
-        <script src="{{ asset('bundles/app/js/bootstrap.js') }}"></script>
-        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ asset('/bundles/app/js/jquery-1.12.0.min.js') }}"></script>
+        <script src="{{ asset('/bundles/app/js/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('/bundles/app/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('/bundles/fosjsrouting/js/router.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
     {% endblock %}

@@ -1,74 +1,15 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
-
+            {% block menu %}
+                {{ include('AppBundle::menu.html.twig') }}
+            {% endblock %}
 
 {% block body %}
-<div id="svg_logo" class="intro-tables" style="display: none;">
-    <svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="792px"
-         height="200px" viewBox="0 0 792 200" style="enable-background:new 0 0 792 200; position: absolute; " xml:space="preserve" >
 
-  <path class="kiwi" style="fill:none;stroke:#f60;stroke-width:2;"
-        d="M17.902,114.475
-        h26.949
-        c2.296,0,12.876-10.182,20.063-10.182
-        c7.186,0,10.83,10.182,12.576,10.182
-        h18.266l7.187,10.779l7.485-100.91l5.091,114.984l6.887-24.554h
-        24.41
-        c3.239,0,14.816-16.769,20.206-16.769
-        s11.08,16.47,13.475,16.47
-        c2.845,0,26.665,0,26.665,0l27.757,0
-        c2.296,0,12.875-10.181,20.062-10.181
-        c7.186,0,10.831,10.181,12.577,10.181
-        h18.266l7.187,10.779l7.485-100.91l5.091,114.984 l6.888-24.555
-                h24.41
-                c3.24,0,14.817-16.768,20.207-16.768
-                s11.079,16.469,13.474,16.469
-                c2.845,0,26.666,0,26.666,0
-                h27.813
-		c2.297,0,12.877-10.181,20.063-10.181
-                s10.829,10.181,12.576,10.181
-                h18.265l7.188,10.779l7.485-100.91l5.092,114.984l6.887-24.555
-		h24.409c3.238,0,14.816-16.768,20.206-16.768
-                s11.08,16.469,13.476,16.469
-                c2.845,0,26.664,0,26.664,0
-                h27.815
-		c2.296,0,12.875-10.181,20.063-10.181
-                c7.187,0,10.829,10.181,12.576,10.181
-                h18.265l7.188,10.779l7.486-100.91l5.091,114.984
-		l6.887-24.555
-                h24.409c3.238,0,14.816-16.768,20.206-16.768
-                s11.079,16.469,13.476,16.469c2.846,0,26.664,0,26.664,0"/>
-</svg></div>
-    {% block javascripts  %}
-
-        {{ parent() }}
-        <script src="{{ asset('bundles/app/js/owl.carousel.min.js') }}"></script>
-        <script src="{{ asset('bundles/app/js/wow.min.js') }}"></script>
-        <script src="{{ asset('bundles/app/js/typewriter.js') }}"></script>
-        <script src="{{ asset('bundles/app/js/jquery.onepagenav.js') }}"></script>
-        <script src="{{ asset('bundles/app/js/main.js') }}"></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.1/TweenMax.min.js'></script>
-        <script>
-            $(function(){
-                $('#svg_logo').show();
-                var svg = document.getElementById("Layer_1"),
-                    viewbox = svg.getAttribute('viewBox').split(' ');
-
-                var t = new TimelineLite();
-
-                t.add(TweenMax.from(svg, 4, {attr:{width:0}, onUpdate:cropWidth, ease:Linear.easeNone, repeat: -1}));
-
-                function cropWidth() {
-                    viewbox[2] = parseFloat(this.target.getAttribute('width'), 10);
-                    svg.setAttribute('viewBox', viewbox.join(' '));
-                }
-            });
-
-    </script>
-        {% endblock  %}
+<div id="lendding-page">
 <div class="preloader">
     <img src="{{ asset('bundles/app/img/loader.gif') }}" alt="Preloader image">
 </div>
-{{ include('AppBundle::menu.html.twig') }}
+
 <header id="intro">
     <div class="container">
         <div class="table">
@@ -208,8 +149,8 @@
 <section id="services" class="section section-padded">
     <div class="container">
         <div class="row text-center title">
-            <h2>Services</h2>
-            <h4 class="light muted">Achieve the best results with our wide variety of training options!</h4>
+            <h2>Услуги</h2>
+            <h4 class="light muted">Мы сделаем вас здоровым и стройным!</h4>
         </div>
         <div class="row services">
             <div class="col-md-4">
@@ -243,69 +184,12 @@
     </div>
     <div class="cut cut-bottom"></div>
 </section>
-<section id="team" class="section gray-bg">
-    <div class="container">
-        <div class="row title text-center">
-            <h2 class="margin-top">Team</h2>
-            <h4 class="light muted">We're a dream team!</h4>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="team text-center">
-                    <div class="cover" style="background:url('{{ asset("bundles/app/img/team/team-cover1.jpg") }}'); background-size:cover;">
-                        <div class="overlay text-center">
-                            <h3 class="white">$69.00</h3>
-                            <h5 class="light light-white">1 - 5 sessions / month</h5>
-                        </div>
-                    </div>
-                    <img src="{{ asset('bundles/app/img/team/team3.jpg') }}" alt="Team Image" class="avatar">
-                    <div class="title">
-                        <h4>Ben Adamson</h4>
-                        <h5 class="muted regular">Fitness Instructor</h5>
-                    </div>
-                    <button data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill">Sign Up Now</button>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team text-center">
-                    <div class="cover" style="background:url('{{ asset("bundles/app/img/team/team-cover2.jpg") }}'); background-size:cover;">
-                        <div class="overlay text-center">
-                            <h3 class="white">$69.00</h3>
-                            <h5 class="light light-white">1 - 5 sessions / month</h5>
-                        </div>
-                    </div>
-                    <img src="{{ asset('bundles/app/img/team/team1.jpg') }}" alt="Team Image" class="avatar">
-                    <div class="title">
-                        <h4>Eva Williams</h4>
-                        <h5 class="muted regular">Personal Trainer</h5>
-                    </div>
-                    <a href="#" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill ripple">Sign Up Now</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team text-center">
-                    <div class="cover" style="background:url('{{ asset("bundles/app/img/team/team-cover3.jpg") }}'); background-size:cover;">
-                        <div class="overlay text-center">
-                            <h3 class="white">$69.00</h3>
-                            <h5 class="light light-white">1 - 5 sessions / month</h5>
-                        </div>
-                    </div>
-                    <img src="{{ asset('bundles/app/img/team/team2.jpg') }}" alt="Team Image" class="avatar">
-                    <div class="title">
-                        <h4>John Phillips</h4>
-                        <h5 class="muted regular">Personal Trainer</h5>
-                    </div>
-                    <a href="#" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill ripple">Sign Up Now</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    {{ include('AppBundle::specialist.html.twig') }}
 <section id="pricing" class="section">
     <div class="container">
         <div class="row title text-center">
-            <h2 class="margin-top white">Pricing</h2>
-            <h4 class="light white">Choose your favorite pricing plan and sign up today!</h4>
+            <h2 class="margin-top white">Цены</h2>
+            <h4 class="light white">У нас смешно как недорого!</h4>
         </div>
         <div class="row no-margin">
             <div class="col-md-7 no-padding col-md-offset-5 pricings text-center">
@@ -410,6 +294,7 @@
         </div>
     </div>
 </footer>
+</div>
 <!-- Holder for mobile navigation -->
 <div class="mobile-nav">
     <ul>
@@ -417,3 +302,52 @@
     <a href="#" class="close-link"><i class="arrow_up"></i></a>
 </div>
 {% endblock %}
+
+
+    {% block javascripts  %}
+
+        {{ parent() }}
+        <script src="{{ asset('bundles/app/js/owl.carousel.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/wow.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/typewriter.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/jquery.onepagenav.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/main.js') }}"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.1/TweenMax.min.js'></script>
+        <script>
+            $(function(){
+
+                $('#_submit').click(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        /*beforeSend: function(xhrObj){
+                         xhrObj.setRequestHeader("X-Requested-With","XMLHttpRequest");
+                         },*/
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                        type        : $('form').attr( 'method' ),
+                        url         : $('form').attr( 'action' ),
+                        data        : $('form').serialize(),
+                        success     : function(data, status, object) {
+                            if (data.sucess == false) {
+                                $('.modal-body').prepend('<div />').html(data.message);
+                            } else {
+                                //console.log('success',data);
+                                window.location.href = data.targetUrl;
+                            }
+                        }
+                    });});
+                //$('#svg_logo').show();
+                var svg = document.getElementById("Layer_1"),
+                    viewbox = svg.getAttribute('viewBox').split(' ');
+
+                var t = new TimelineLite();
+
+                t.add(TweenMax.from(svg, 4, {attr:{width:0}, onUpdate:cropWidth, ease:Linear.easeNone, repeat: -1}));
+
+                function cropWidth() {
+                    viewbox[2] = parseFloat(this.target.getAttribute('width'), 10);
+                    svg.setAttribute('viewBox', viewbox.join(' '));
+                }
+            });
+
+        </script>
+    {% endblock  %}

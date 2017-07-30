@@ -11,12 +11,12 @@ namespace AppBundle\Model;
 
 class MeasuringModel
 {
-    public function normalizeMeasuringDate (array $measuring)
+    public function normalizeMeasuring (array $measuring)
     {
+        $normalizedMeasuring = [];
         for($i = 0, $j = count($measuring); $i < $j; ++$i){
-            $currentDate = new \DateTime($measuring[$i]['date']);
-            $measuring[$i]['date'] = $currentDate->format('d:m:Y H:i');
+            $normalizedMeasuring[] = [($measuring[$i]['date']->getTimestamp()*1000), (float)$measuring[$i]['value']];
         }
-        return $measuring;
+        return $normalizedMeasuring;
     }
 }

@@ -191,7 +191,7 @@ nav.navbar-fixed-top .navbar-nav > li > a:not(.btn) {
 }
 /* Buttons */
 
-.btn {
+#lendding-page .btn {
 	font-size: 18px;
 	display: inline-block;
 	padding: 15px 30px;
@@ -203,48 +203,48 @@ nav.navbar-fixed-top .navbar-nav > li > a:not(.btn) {
 	transition: all 0.3s ease;
 }
 
-.btn:hover,
-.btn:focus {
+#lendding-page .btn:hover,
+#lendding-page .btn:focus {
 	color: white;
 }
 
-.btn.btn-blue {
+#lendding-page .btn.btn-blue {
 	background: #00a8ff;
 }
 
-.btn.btn-blue:hover {
+#lendding-page .btn.btn-blue:hover {
 	background: #31b9ff;
 }
 
-.btn.btn-blue-fill {
+#lendding-page .btn.btn-blue-fill {
 	color: #00a8ff;
 	border-color: #00a8ff;
 	background: transparent;
 }
 
-.btn.btn-blue-fill:hover {
+#lendding-page .btn.btn-blue-fill:hover {
 	color: white;
 	background: #00a8ff;
 }
 
-.btn.btn-white-fill {
+#lendding-page .btn.btn-white-fill {
 	color: #fff;
 	border-color: #fff;
 	background: transparent;
 }
 
-.btn.btn-white-fill:hover {
+#lendding-page .btn.btn-white-fill:hover {
 	color: #00a8ff;
 	background: #fff;
 }
 
-.btn.btn-gray-fill {
+#lendding-page .btn.btn-gray-fill {
 	color: #fff;
 	border-color: #fff;
 	background: transparent;
 }
 
-.btn.btn-gray-fill:hover {
+#lendding-page .btn.btn-gray-fill:hover {
 	border-color: #bbb;
 	background: #bbb;
 }

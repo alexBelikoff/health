@@ -1,12 +1,8 @@
 #svg_logo
 {
-    position: absolute;
-    top:10px;
-    left: 10px;
     z-index:999;
+    position: absolute;
+    left: -50px;
+    top: -15px;
+}
 
-}
-nav.navbar
-{
-    padding-left: 800px;
-}

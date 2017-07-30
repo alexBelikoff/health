@@ -1,0 +1,35 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block menu %}
+    {{ include('AppBundle::menu.html.twig') }}
+{% endblock %}
+
+{% block body %}
+<div  class="container" style="margin-top: 150px;">
+    <div class="list-group">
+        {% for patient in patients %}
+            <div class="list-group-item">
+                <div class="list-group-item-heading">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="{{ vich_uploader_asset(patient, 'imageFile') }}" alt="{{ patient.firstName }}"
+                                 class="avatar img-circle" style="width: 60px;">
+                        </div>
+                        <div class="col-md-10">
+                            <h4 class="">{{ patient.firstName }}  {{ patient.secondName }} {{ patient.lastName }}</h4>
+                            <h6 class="">Рост: {{ patient.height }} см </h6>
+                            <h6 class="">Вес: {{ patient.currentWeight.0.value }} кг</h6>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="list-group-item-text">
+
+
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

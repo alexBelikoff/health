@@ -1,0 +1,79 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="health_patient")
+ */
+
+class Patient
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_name", type="string", length=64)
+     */
+    private $lastName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="first_name", type="string", length=32)
+     */
+    private $firstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="second_name", type="string", length=32)
+     */
+    private $secondName;
+
+
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="birth_date", type="date")
+     */
+    private $birthDate;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="User", mappedBy="patient")
+     */
+    private $user;
+
+
+    /**
+     * One Patient has Many Measuring.
+     * @ORM\OneToMany(targetEntity="Measuring", mappedBy="patient")
+     */
+    private $measuring;
+
+
+    /**
+     * Many Patient have Many Doctor.
+     * @ORM\ManyToMany(targetEntity="Doctor", inversedBy="patients")
+     * @ORM\JoinTable(name="patients_doctors")
+     */
+    private $doctors;
+
+
+    public function __construct() {
+        $this->measuring = new ArrayCollection();
+        $this->doctors = new ArrayCollection();
+    }
+}

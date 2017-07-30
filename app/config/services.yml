@@ -38,4 +38,17 @@ services:
         arguments:    ['@router', '@security.token_storage', '@fos_user.user_manager', '@service_container']
 
     health.measuring_model:
-      class: AppBundle\Model\MeasuringModel
+        class: AppBundle\Model\MeasuringModel
+        public: true
+
+    health.doctor_model:
+        class: AppBundle\Model\DoctorModel
+        public: true
+
+    health.measuring_repository:
+      class: AppBundle\Repository\MeasuringRepository
+
+    health.patient_model:
+        class: AppBundle\Model\PatientModel
+        arguments: ['@doctrine.orm.entity_manager']
+        public: true

@@ -10,6 +10,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity
  * @ORM\Table(name="health_doctor")
+ * @Vich\Uploadable
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\DoctorRepository")
  */
 class Doctor
 {
@@ -109,6 +111,13 @@ class Doctor
      * @var \DateTime
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $title;
 
     public function __construct() {
         $this->patients = new ArrayCollection();
@@ -420,5 +429,30 @@ class Doctor
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Doctor
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }

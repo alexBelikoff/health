@@ -5,10 +5,21 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\VarDumper\VarDumper;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Doctor;
+use AppBundle\Entity\Measuring;
+use AppBundle\Entity\MeasuringType;
+use AppBundle\Form\Type\MeasuringType as MeasuringForm;
+use AppBundle\Form\Type\PatientType as PatientForm;
+use AppBundle\Form\Type\DoctorType as DoctorForm;
+/*
+ * TODO: Разнести по разным контроллерам!!
+ */
 
 class DefaultController extends Controller
 {
@@ -18,7 +29,9 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return [];
+        $repository = $this->getDoctrine()->getRepository(Doctor::class);
+        $specialists = $repository->getRandomDoctors();
+        return ['specialists' => $specialists];
     }
 
 
@@ -28,18 +41,195 @@ class DefaultController extends Controller
      */
     public function cabinetAction(Request $request)
     {
-        //TODO: Развести на доктора и пациента
-        //
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_PATIENT')) {
+            $response = $this->forward('AppBundle:Default:patientCabinet');
+        }elseif($this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')){
+            $response = $this->forward('AppBundle:Default:doctorCabinet');
+        }
+        return $response;
+    }
+
+    /**
+     * @Route("/cabinet/profile", name="cabinet_profile", options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function profileAction(Request $request)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_PATIENT')) {
+            $response = $this->forward('AppBundle:Default:patientProfile');
+        }elseif($this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')){
+            $response = $this->forward('AppBundle:Default:doctorProfile');
+        }
+        return $response;
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function patientProfileAction(Request $request)
+    {
+        $patient = $this->getUser()->getPatient();
+        $form = $this->createForm(PatientForm::class, $patient);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $patient = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($patient);
+            $em->flush();
+            return $this->redirectToRoute('cabinet_profile');
+        }
+
+        return $this->render('AppBundle:Cabinet:patient_profile.html.twig',
+            [
+                'form' => $form->createView(),
+                'patient' => $patient,
+            ]);
+
+    }
+
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function doctorProfileAction(Request $request)
+    {
+        $doctor = $this->getUser()->getDoctor();
+        $form = $this->createForm(DoctorForm::class, $doctor);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $doctor = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($doctor);
+            $em->flush();
+            return $this->redirectToRoute('cabinet_profile');
+        }
+
+        return $this->render('AppBundle:Cabinet:doctor_profile.html.twig',['doctor' => $doctor, 'form' => $form->createView(),]);
+
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function patientCabinetAction(Request $request)
+    {
         $patient = $this->getUser()->getPatient();
         $measuring = $patient->getMeasuring();
         if ($request->isXmlHttpRequest()) {
             $repository = $this->getDoctrine()->getRepository('AppBundle:Measuring');
             $measuringModel = $this->get('health.measuring_model');
-            $normalizedMeasuring = $measuringModel->normalizeMeasuringDate($repository->getMeasuringByPatient($patient));
+            $normalizedMeasuring = $measuringModel->normalizeMeasuring($repository->getMeasuringByPatient($patient));
             $response = new JsonResponse(['measuring' => $normalizedMeasuring]);
             return $response;
         }
-        return $this->render('AppBundle:Cabinet:index.html.twig',['measuring' => $measuring]);
+        return $this->render('AppBundle:Cabinet:patient_cabinet.html.twig',['measuring' => $measuring]);
 
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function doctorCabinetAction(Request $request)
+    {
+        $doctor = $this->getUser()->getDoctor();
+        return $this->render('AppBundle:Cabinet:doctor_cabinet.html.twig', ['doctor' => $doctor]);
+
+    }
+
+    /**
+     * @Route("/cabinet/measuring/add-value", name="cabinet_add_measuring_value", options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function addMeasuringValueAction(Request $request)
+    {
+        $measurin = new Measuring();
+        $form = $this->createForm(MeasuringForm::class, $measurin);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $patient = $this->getUser()->getPatient();
+            $typeRepository = $this->getDoctrine()->getRepository(MeasuringType::class);
+            $type = $typeRepository->findOneBy(['type' => 'weight']);
+            $em = $this->getDoctrine()->getManager();
+            $measurin = $form->getData();
+            $em->persist($measurin);
+            $measurin->setPatient($patient);
+            $measurin->setType($type);
+            $em->flush();
+            return $this->redirectToRoute('cabinet');
+        }
+        return $this->render('AppBundle:Cabinet:measuring_add_value.html.twig',
+            ['form' => $form->createView(),]);
+    }
+    /**
+     * @Route("/cabinet/specialists", name="cabinet_specialists", options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function getPatientSpecialistsAction(Request $request)
+    {
+        $patient = $this->getUser()->getPatient();
+        $doctors = $patient->getDoctors();
+        $doctorRepository = $this->getDoctrine()->getRepository(Doctor::class);
+        $allDoctors = $doctorRepository->getAllDoctors();
+        $doctorModel = $this->get('health.doctor_model');
+        $myDoctorIds = $doctorModel->getArrayIdDoctors($doctors);
+        return $this->render('AppBundle:Cabinet:specialists.html.twig',
+            [
+                'doctors' => $doctors,
+                'all_doctors' => $allDoctors,
+                'my_doctor_ids' => $myDoctorIds,
+            ]);
+    }
+
+    /**
+     * @Route("/cabinet/clients", name="cabinet_clients", options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function getDoctorClietnsAction(Request $request)
+    {
+        $doctor = $this->getUser()->getDoctor();
+        $patientModel = $this->get('health.patient_model');
+        $patients = $patientModel->setCurrentWeight($doctor->getPatients());
+        //TODO: Подумать над этим!
+        /*$measuringArray = [];
+        $measuringModel = $this->get('health.measuring_model');
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Measuring');
+        foreach ($patients as $patient){
+            $measuringArray[$patient->getId()] = $measuringModel->normalizeMeasuring($repository->getMeasuringByPatient($patient));
+        }*/
+
+        return $this->render('AppBundle:Cabinet:clients.html.twig',
+            [
+                'patients' => $patients,
+                //'measuringArray' => $measuringArray
+
+            ]);
+    }
+
+    /**
+     * @Route("/cabinet/specialists/remove/{doctor}", name="cabinet_specialists_remove_one", options = { "expose" = true })
+     * @Security("has_role('ROLE_PATIENT')")
+     */
+    public function removePatientSpecialistsAction(Doctor $doctor)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $patient = $this->getUser()->getPatient();
+        $patient->removeDoctor($doctor);
+        $em->persist($patient);
+        $em->flush();
+        return $this->redirectToRoute('cabinet_specialists');
+    }
+    /**
+     * @Route("/cabinet/specialists/add/{doctor}", name="cabinet_specialists_add_one", options = { "expose" = true })
+     * @Security("has_role('ROLE_PATIENT')")
+     */
+    public function addPatientSpecialistsAction(Doctor $doctor)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $patient = $this->getUser()->getPatient();
+        $patient->addDoctor($doctor);
+        $em->persist($patient);
+        $em->flush();
+        return $this->redirectToRoute('cabinet_specialists');
     }
 }

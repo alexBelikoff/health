@@ -38,31 +38,29 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, Au
         $this->service_container = $service_container;
 
     }
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token) {
-        $dumper = new VarDumper();
+
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+    {
         if ($request->isXmlHttpRequest()) {
-            $dumper->dump('isXmlHttpRequest');
-            $targetUrl = $request->getSession()->get('_security.target_path');
-            $result = array('success' => true, 'targetUrl' => targetUrl );
+            $targetUrl = $this->router->generate('cabinet');
+            $result = ['success' => true, 'targetUrl' => $targetUrl];
             $response = new Response(json_encode($result));
             $response->headers->set('Content-Type', 'application/json');
             return $response;
-        }
-        else {
-            $dumper->dump('is NOT! XmlHttpRequest');
-            // Create a flash message with the authentication error message
-            //$request->getSession()->getFlashBag()->set('error', $exception->getMessage());
+        } else {
             $url = $this->router->generate('cabinet');
-
             return new RedirectResponse($url);
         }
 
         return new RedirectResponse($this->router->generate('homepage'));
     }
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception) {
+
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    {
 
         if ($request->isXmlHttpRequest()) {
-            $result = array('success' => false, 'message' => $exception->getMessage());
+            $targetUrl = $this->router->generate('homepage');
+            $result = ['success' => false, 'message' => $exception->getMessage(), 'targetUrl' => $targetUrl];
             $response = new Response(json_encode($result));
             $response->headers->set('Content-Type', 'application/json');
             return $response;

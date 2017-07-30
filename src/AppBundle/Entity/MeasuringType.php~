@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="health_measuring_type")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MeasuringTypeRepository")
  */
 class MeasuringType
 {
@@ -112,29 +111,5 @@ class MeasuringType
     public function getMeasuring()
     {
         return $this->measuring;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return MeasuringType
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 }

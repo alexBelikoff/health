@@ -54,6 +54,31 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script>
     $(function(){
+
+    Highcharts.setOptions(
+        {lang: {
+            contextButtonTitle: "Меню",
+            decimalPoint: ".",
+            downloadJPEG: "Сохранить как JPEG",
+            downloadPDF: "Сохранить как PDF",
+            downloadPNG: "Сохранить как PNG",
+            downloadSVG: "Сохранить как  SVG",
+            drillUpText: "Назад к {series.name}",
+            invalidDate:"",
+            loading: "Загрузка",
+            months: [ "Январь" , "Февраль" , "Март" , "Апрель" , "Май" , "Июнь" , "Июль" , "Август" , "Сетябрь" , "Октябрь" , "Ноябрь" , "Декабрь"],
+            noData: "Нет данных для отображения",
+            numericSymbolMagnitude: 1000,
+            numericSymbols: [ "k" , "M" , "G" , "T" , "P" , "E"],
+            printChart: "Печать диаграммы",
+            resetZoom: "Сбросить увеличение",
+            resetZoomTitle: "Сбросить увеличение1:1",
+            shortMonths: [ "Янв" , "Фев" , "Мрт" , "Апр" , "Май " , "Июн " , "Июл " , "Авг" , "Сен" , "Окт" , "Нбр" , "Дек"],
+            shortWeekdays: undefined,
+            thousandsSep: " ",
+            weekdays: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Чеверг", "Пятница", "Суббота"]
+        }}
+    );
     var url = Routing.generate('cabinet');
         $.post(url, function(data) {
             var measuring = data.measuring;

@@ -22,10 +22,10 @@ class MeasuringType extends AbstractType
                         $date = new \DateTime();
                         //return null;
                     }
-                    return $date->format('Y/m/d H:i');
+                    return $date->format('d.m.Y H:i');
                 },
                 function($dateString){
-                    $date = \DateTime::createFromFormat('Y/m/d H:i', $dateString);
+                    $date = \DateTime::createFromFormat('d.m.Y H:i', $dateString);
                     $date->format('Y-m-d H:i:s');
                     return $date;
                 }

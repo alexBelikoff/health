@@ -17,7 +17,14 @@
 
     <script>
         $(function(){
-            $('form #measuring_date').datetimepicker();
+            $.datetimepicker.setLocale('ru');
+            $('form #measuring_date').datetimepicker(
+                {
+                    formatDate:'d.m.Y',
+                    format:'d.m.Y H:i',
+                    lang:'ru',
+                }
+            );
         });
     </script>
 

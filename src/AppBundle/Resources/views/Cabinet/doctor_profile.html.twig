@@ -37,8 +37,16 @@
                 $('form[name=doctor] select').prop('readonly', false);
                 $(this).hide();
             });
+            $.datetimepicker.setLocale('ru');
 
-            $('form #doctor_birthDate').datetimepicker();
+            $('form #doctor_birthDate').datetimepicker(
+                {
+                    formatDate:'d.m.Y',
+                    format:'d.m.Y H:i',
+                    lang:'ru',
+                    timepicker:false,
+                }
+            );
         });
     </script>
 

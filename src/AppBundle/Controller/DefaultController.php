@@ -232,4 +232,22 @@ class DefaultController extends Controller
         $em->flush();
         return $this->redirectToRoute('cabinet_specialists');
     }
+
+    /**
+     * @Route("/cabinet/measuring/get-stability-range", name="get_stability_range", options = { "expose" = true })
+     * @Security("has_role('ROLE_PATIENT')")
+     */
+    public function getStabilityRangeAction(Request $request)
+    {
+        $measuringId = $request->request->get('data');
+        if ($request->isXmlHttpRequest() && $measuringId) {
+
+            $measuringModel = $this->get('health.measuring_model');
+            $stabilityRange = $measuringModel->getStabilityRange($measuringId);
+            $response = new JsonResponse(['stabilityRange' => $stabilityRange]);
+            return $response;
+        }else{
+            return $this->redirectToRoute('cabinet');
+        }
+    }
 }

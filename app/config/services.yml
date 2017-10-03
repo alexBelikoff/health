@@ -40,7 +40,7 @@ services:
     health.measuring_model:
         class: AppBundle\Model\MeasuringModel
         public: true
-
+        arguments: ['@doctrine.orm.entity_manager']
     health.doctor_model:
         class: AppBundle\Model\DoctorModel
         public: true

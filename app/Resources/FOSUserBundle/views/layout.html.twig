@@ -5,6 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Health{% endblock %}</title>
+		 <!-- Compiled and minified CSS -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
         <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('bundles/app/img/favicons/apple-touch-icon-57x57.png') }}">
         <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('bundles/app/img/favicons/apple-touch-icon-60x60.png') }}">
         <link rel="icon" type="image/png" href="{{ asset('bundles/app/img/favicons/favicon-32x32.png') }}" sizes="32x32">
@@ -15,8 +18,8 @@
         <meta name="keywords" content="{% block keywords %}{% endblock %}" />
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ '/bundles/app/css/normalize.css' }}" />
-            <link rel="stylesheet" href="{{ '/bundles/app/css/bootstrap.min.css' }}" />
-            <link rel="stylesheet" href="{{ '/bundles/app/css/bootstrap-theme.min.css' }}" />
+            <!-- <link rel="stylesheet" href="{{ '/bundles/app/css/bootstrap.min.css' }}" /> -->
+            <!-- <link rel="stylesheet" href="{{ '/bundles/app/css/bootstrap-theme.min.css' }}" /> -->
             <link rel="stylesheet" href="{{ '/bundles/app/css/jquery-ui.theme.min.css' }}" />
             <link rel="stylesheet" href="{{ '/bundles/app/css/jquery.datetimepicker.css' }}" />
             <link rel="stylesheet" href="{{ '/bundles/app/css/animate.min.css' }}" />
@@ -70,7 +73,33 @@
         <script src="{{ asset('/bundles/app/js/bootstrap.js') }}"></script>
         <script src="{{ asset('/bundles/fosjsrouting/js/router.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+		<script>
+		$(document).ready(function() {
+			$(".button-collapse").sideNav();
 
+			
+			
+			$('.tooltipped').tooltip({delay: 50});
+			
+			setTimeout(function() {
+				$('ul.tabs').tabs();
+			}, 100);
+			
+			$('.datepicker').pickadate({
+				selectMonths: true, 
+				selectYears: 15 
+			});
+			
+			$('.collapsible').collapsible();
+			
+			$('select').material_select();
+		});
+		</script>
+		
+					
+	 <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  
     {% endblock %}
     </body>
 </html>

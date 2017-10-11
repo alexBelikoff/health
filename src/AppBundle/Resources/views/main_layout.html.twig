@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Health{% endblock %}</title>
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('bundles/app/img/favicons/apple-touch-icon-57x57.png') }}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('bundles/app/img/favicons/apple-touch-icon-60x60.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('bundles/app/img/favicons/favicon-32x32.png') }}" sizes="32x32">
+        <link rel="icon" type="image/png" href="{{ asset('bundles/app/img/favicons/favicon-16x16.png') }}" sizes="16x16">
+        <link rel="manifest" href="{{ asset('bundles/app/img/favicons/manifest.json') }}">
+        <link rel="shortcut icon" href="{{ asset('bundles/app/img/favicons/favicon.ico') }}">
+        <meta name="description" content="{% block description %}{% endblock %}" />
+        <meta name="keywords" content="{% block keywords %}{% endblock %}" />
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ '/bundles/app/css/bootstrap.min.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/bootstrap-theme.min.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/normalize.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/jquery-ui.theme.min.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/jquery.datetimepicker.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/animate.min.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/et-icons.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/owl.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/cardio.css' }}" />
+            <link rel="stylesheet" href="{{ '/bundles/app/css/main.css' }}" />
+        {% endblock %}
+    </head>
+    </head>
+    <body>
+    <div class="container-fluid">
+        <nav class="navbar">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <!--<a class="navbar-brand" href="#">
+                    <img src="{{ asset('bundles/app/img/logo.png') }}"
+                         data-active-url="{{ asset('bundles/app/img/logo-active.png') }}" alt=""></a>--?
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        {% if  not app.user %}
+                            <div id="svg_logo">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="5px" y="5px"
+                                     viewBox="0 0 220 60" enable-background="new 0 0 220 60" xml:space="preserve" width="220px" height="60px">
+<path fill="none" stroke="#FF6600" stroke-width="2" d="M1,48.3h7.6c0.7,0,3.6-5.4,5.5-5.4c2,0,3,5.4,3.5,5.4h5.1l2,5.8L26.9,0
+	l1.4,61.6l1.9-13.2H37c0.9,0,4.1-8.9,5.6-8.9s3.1,8.8,3.7,8.8c0.7,0,7.5,0,7.5,0h7.8c0.7,0,3.6-5.4,5.5-5.4c2,0,3,5.4,3.5,5.4h5.1
+	l2,5.8L79.9,0l1.4,61.6l1.9-13.2H90c0.9,0,4.1-8.9,5.6-8.9s3.1,8.8,3.7,8.8c0.7,0,7.5,0,7.5,0h7.7c0.7,0,3.6-5.4,5.5-5.4
+	c2,0,3,5.4,3.5,5.4h5.1l2,5.8L133,0l1.4,61.6l1.9-13.2h6.8c0.9,0,4.1-8.9,5.6-8.9s3.1,8.8,3.7,8.8c0.7,0,7.5,0,7.5,0h7.7
+	c0.7,0,3.6-5.4,5.5-5.4c2,0,3,5.4,3.5,5.4h5.1l2,5.8L186.1,0l1.4,61.6l1.9-13.2h6.8c0.9,0,4.1-8.9,5.6-8.9s3.1,8.8,3.7,8.8
+	c0.7,0,7.5,0,7.5,0"/>
+</svg>
+                            </div>{% endif %}
+                        <ul class="nav navbar-nav navbar-right main-nav" style="margin-left: 150px;">
+                            {% if  not app.user %}
+                                <li><a href="#intro">О Компании</a></li>
+                                <li><a href="#services">Услуги</a></li>
+                                <li><a href="#team">Наши специалисты</a></li>
+                                <li><a href="#pricing">Цены</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#modal1" class="btn btn-blue">Войти</a></li>
+                                {#<li style="margin-left: 15px;"><a href="{{ path("fos_user_registration_register") }}" class="btn btn-blue">Регистрация</a></li>#}
+                            {% elseif is_granted('ROLE_PATIENT') %}
+                                <li><a href="{{ path("cabinet") }}">Кабинет</a></li>
+                                <li><a href="{{ path("cabinet_profile") }}">Профиль</a></li>
+                                <li><a href="{{ path("cabinet_add_measuring_value") }}">Ввод показаний</a></li>
+                                <li><a href="{{ path("cabinet_specialists") }}">Мои специалисты</a></li>
+                                <li><a href="{{ path("fos_user_security_logout") }}">Выход</a></li>
+                            {% elseif is_granted('ROLE_DOCTOR')  %}
+                                <li><a href="{{ path("cabinet") }}">Кабинет</a></li>
+                                <li><a href="{{ path("cabinet_profile") }}">Профиль</a></li>
+                                <li><a href="{{ path("cabinet_clients") }}">Мои пациенты</a></li>
+                                <li><a href="#">Чего-нибудь еще</a></li>
+                                <li><a href="{{ path("fos_user_security_logout") }}">Выход</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container-fluid -->
+        </nav>
+        {#<div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>#}
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashBag.all %}
+                {% for message in messages %}
+                    <div class="{{ type }}">
+                        {{ message|trans({}, 'FOSUserBundle') }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+
+
+                    {% block body %}
+                        {% block fos_user_content %}
+                        {% endblock fos_user_content %}
+                    {% endblock %}
+
+            </div>
+
+
+    {% block javascripts  %}
+        <script src="{{ asset('/bundles/app/js/jquery-1.12.0.min.js') }}"></script>
+        <script src="{{ asset('/bundles/app/js/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('/bundles/app/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('/bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    {% endblock %}
+    </body>
+</html>
+
+

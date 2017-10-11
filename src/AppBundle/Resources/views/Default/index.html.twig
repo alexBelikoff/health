@@ -1,6 +1,328 @@
-{% extends "AppBundle::base.html.twig" %}
+{% extends "AppBundle::main_layout.html.twig" %}
 
 {% block body %}
     {{ parent() }}
+    <div id="lendding-page">
+        <div class="preloader">
+            <img src="{{ asset('bundles/app/img/loader.gif') }}" alt="Preloader image">
+        </div>
 
+        <header id="intro">
+            <div class="container">
+                <div class="table">
+                    <div class="header-text">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h3 class="light white">Позаботься о своем теле.</h3>
+                                <h1 class="white typed">Держи руку на пульсе своего веса</h1>
+                                <span class="typed-cursor">|</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div class="cut cut-top"></div>
+            <div class="container">
+                <div class="row intro-tables">
+                    <div class="col-md-4">
+                        <div class="intro-table intro-table-first">
+                            <h6 class="white heading">Постоянный мониторинг вашего</h6>
+                            <div class="owl-carousel owl-schedule bottom">
+                                <div class="item">
+                                    <div class="schedule-row row">
+                                        <div class="col-xs-6">
+                                            <h5 class="regular white">веса</h5>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-row row">
+                                        <div class="col-xs-6">
+                                            <h5 class="regular white">сердечного ритма</h5>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-row row">
+                                        <div class="col-xs-6">
+                                            <h5 class="regular white">давления</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="schedule-row row">
+                                        <div class="col-xs-6">
+                                            <h5 class="regular white">пульса</h5>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-row row">
+                                        <div class="col-xs-6">
+                                            <h5 class="regular white">чего-нибудь еще</h5>
+                                        </div>
+
+                                    </div>
+                                    <div class="schedule-row row">
+                                        <div class="col-xs-6">
+                                            <h5 class="regular white">и еще</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="schedule-row row">
+                                        <div class="col-xs-6">
+                                            <h5 class="regular white">И еще здесь</h5>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-row row">
+                                        <div class="col-xs-6">
+                                            <h5 class="regular white">здесь</h5>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-row row">
+                                        <div class="col-xs-6">
+                                            <h5 class="regular white">и здесь</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="intro-table intro-table-hover">
+                            <h6 class="white heading hide-hover">Стань членом!</h6>
+                            <div class="bottom">
+                                <h4 class="white heading small-heading no-margin regular">Начни сегодня -</h4>
+                                <h4 class="white heading small-pt">- и завтра тебя будет не узнать</h4>
+                                {#<a href="#" class="btn btn-white-fill expand">Регистрация</a>#}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="intro-table intro-table-third">
+                            <h6 class="white heading">Отзывы счастливых клиентов</h6>
+                            <div class="owl-testimonials bottom">
+                                <div class="item">
+                                    <h4 class="white heading content">Сбросил 70 кг, за 3 дня. Раньше весил 95.</h4>
+                                    <h5 class="white heading light author">Рахит Дистрофов</h5>
+                                </div>
+                                <div class="item">
+                                    <h4 class="white heading content">Теперь могу спрятаться за швабру!</h4>
+                                    <h5 class="white heading light author">Корней Толстых</h5>
+                                </div>
+                                <div class="item">
+                                    <h4 class="white heading content">Равнодушно прохожу мимо холодильника.</h4>
+                                    <h5 class="white heading light author">Кристина Жрачкина</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="services" class="section section-padded">
+            <div class="container">
+                <div class="row text-center title">
+                    <h2>Услуги</h2>
+                    <h4 class="light muted">Мы сделаем вас здоровым и стройным!</h4>
+                    <h5 class="light muted">Только научно обоснованая методика, базирующаяся на строгом математическом аппарате!</h5>
+                </div>
+                <div class="row services">
+                    <div class="col-md-4">
+                        <div class="service">
+                            <div class="icon-holder">
+                                <img src="{{ asset('bundles/app/img/icons/heart-blue.png') }}" alt="" class="icon">
+                            </div>
+                            <h5 class="heading">Лучше, чем кардиостимулятор</h5>
+                            <p class="description">Рекомендации наших специалистов лучше, чем кардиостимулятор.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="service">
+                            <div class="icon-holder">
+                                <img src="{{ asset('bundles/app/img/icons/guru-blue.png') }}" alt="" class="icon">
+                            </div>
+                            <h5 class="heading">Эффективней йоги</h5>
+                            <p class="description">Рекомендации наших специалистов эффективней йоги</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="service">
+                            <div class="icon-holder">
+                                <img src="{{ asset('bundles/app/img/icons/weight-blue.png') }}" alt="" class="icon">
+                            </div>
+                            <h5 class="heading">Мощнее качалки</h5>
+                            <p class="description">Рекомендации наших специалистов мощнее качалки</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cut cut-bottom"></div>
+        </section>
+        {{ include('AppBundle::specialist.html.twig') }}
+        <section id="pricing" class="section">
+            <div class="container">
+                <div class="row title text-center">
+                    <h2 class="margin-top white">Цены</h2>
+                    <h4 class="light white">У нас смешно как недорого!</h4>
+                </div>
+                <div class="row no-margin">
+                    <div class="col-md-7 no-padding col-md-offset-5 pricings text-center">
+                        <div class="pricing">
+                            <div class="box-main active" data-img="{{ asset('bundles/app/img/pricing1.jpg') }}">
+                                <h6 class="white">Здесь можно разместить</h6>
+                                <h6 class="white regular light">подробное объяснение ценовой политики</h6>
+                                {#<a href="#" data-toggle="modal" data-target="#modal1" class="btn btn-white-fill">Sign Up Now</a>#}
+                                <i class="info-icon icon_question"></i>
+                            </div>
+                            <div class="box-second active">
+                                <h6 class="white regular light">А здесь еще раз перечислить услуги</h6>
+                                <ul class="white-list text-left">
+                                    <li>Делаем то-то</li>
+                                    <li>Делаем то-то</li>
+                                    <li>Делаем то-то</li>
+                                    <li>Делаем то-то</li>
+                                    <li>Делаем то-то</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pricing">
+                            <div class="box-main" data-img="{{ asset('bundles/app/img/pricing2.jpg') }}">
+                                <h6 class="white">Еще какая-нибудь важная информация</h6>
+                                {#<h6 class="white regular light">$100.00 <span class="small-font">/ year</span></h6>
+                                <a href="#" data-toggle="modal" data-target="#modal1" class="btn btn-white-fill">Sign Up Now</a>#}
+                                <i class="info-icon icon_question"></i>
+                            </div>
+                            <div class="box-second">
+                                <h6 class="white regular light">И вновь перечисление услуг</h6>
+                                <ul class="white-list text-left">
+                                    <li>А еще делаем то-то</li>
+                                    <li>А еще делаем то-то</li>
+                                    <li>А еще делаем то-то</li>
+                                    <li>А еще делаем то-то</li>
+                                    <li>А еще делаем то-то</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section section-padded blue-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="owl-twitter owl-carousel">
+                            <div class="item text-center">
+                                <i class="icon fa fa-twitter"></i>
+                                <h4 class="white light">Здесь будет какая-нибудь рекламная информация</h4>
+                                <h4 class="light-white light">Нужен контент</h4>
+                            </div>
+                            <div class="item text-center">
+                                <i class="icon fa fa-twitter"></i>
+                                <h4 class="white light">И здесь тоже она</h4>
+                                <h4 class="light-white light">Нужен контент</h4>
+                            </div>
+                            <div class="item text-center">
+                                <i class="icon fa fa-twitter"></i>
+                                <h4 class="white light">И здесь</h4>
+                                <h4 class="light-white light">Нужен контент</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {#{ include('::modalLogin.html.twig') }#}
+        {{ render(controller('AppBundle:Security:login')) }}
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 text-center-mobile">
+                        <h3 class="white">Здесь будет футер</h3>
+                        <h5 class="light regular light-white">Можно добавить контактную информацию</h5>
+                        <a href="#" class="btn btn-blue ripple trial-button">ссылки на соц сети</a>
+                    </div>
+                    <div class="col-sm-6 text-center-mobile">
+                        <h3 class="white">и прочие важные вещи<span class="open-blink"></span></h3>
+                        <div class="row opening-hours">
+                            <div class="col-sm-6 text-center-mobile">
+                                <h5 class="light-white light">может быть телефон горячей линии</h5>
+                                <h3 class="regular white">8 800 ХХХ - ХХ - ХХ</h3>
+                            </div>
+                            <div class="col-sm-6 text-center-mobile">
+                                <h5 class="light-white light">или адрес</h5>
+                                <h6 class="regular white">Деревня Красные Орлы. Площадь Добрых традиций. Дом 13А</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {#div class="row bottom-footer text-center-mobile">
+                    <div class="col-sm-8">
+                        <p>&copy; 2015 All Rights Reserved. Powered by <a href="http://www.phir.co/">PHIr</a> exclusively for <a href="http://tympanus.net/codrops/">Codrops</a></p>
+                    </div>
+                    <div class="col-sm-4 text-right text-center-mobile">
+                        <ul class="social-footer">
+                            <li><a href="http://www.facebook.com/pages/Codrops/159107397912"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="http://www.twitter.com/codrops"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="https://plus.google.com/101095823814290637419"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>#}<
+        </footer>
+    </div>
+    <!-- Holder for mobile navigation -->
+    <div class="mobile-nav">
+        <ul>
+        </ul>
+        <a href="#" class="close-link"><i class="arrow_up"></i></a>
+    </div>
 {% endblock %}
+ {% block javascripts  %}
+
+     {{ parent() }}
+     <script src="{{ asset('bundles/app/js/owl.carousel.min.js') }}"></script>
+     <script src="{{ asset('bundles/app/js/wow.min.js') }}"></script>
+     <script src="{{ asset('bundles/app/js/typewriter.js') }}"></script>
+     <script src="{{ asset('bundles/app/js/jquery.onepagenav.js') }}"></script>
+     <script src="{{ asset('bundles/app/js/main.js') }}"></script>
+     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.1/TweenMax.min.js'></script>
+     <script>
+         $(function(){
+
+             $('#_submit').click(function(e){
+                 e.preventDefault();
+                 $.ajax({
+                     /*beforeSend: function(xhrObj){
+                      xhrObj.setRequestHeader("X-Requested-With","XMLHttpRequest");
+                      },*/
+                     headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                     type        : $('form').attr( 'method' ),
+                     url         : $('form').attr( 'action' ),
+                     data        : $('form').serialize(),
+                     success     : function(data, status, object) {
+                         if (data.sucess == false) {
+                             $('.modal-body').prepend('<div />').html(data.message);
+                         } else {
+                             //console.log('success',data);
+                             window.location.href = data.targetUrl;
+                         }
+                     }
+                 });});
+             //$('#svg_logo').show();
+             var svg = document.getElementById("Layer_1");
+             if(svg){
+                 viewbox = svg.getAttribute('viewBox').split(' ');
+
+                 var t = new TimelineLite();
+
+                 t.add(TweenMax.from(svg, 4, {attr:{width:0}, onUpdate:cropWidth, ease:Linear.easeNone, repeat: -1}));
+             }
+
+
+             function cropWidth() {
+                 viewbox[2] = parseFloat(this.target.getAttribute('width'), 10);
+                 svg.setAttribute('viewBox', viewbox.join(' '));
+             }
+         });
+
+     </script>
+ {% endblock  %}

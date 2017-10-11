@@ -5,57 +5,43 @@
 
 {% block body %}
 
-    <div  class="container" style="margin-top: 150px;">
-
-
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#chart" aria-controls="chart" role="tab" data-toggle="tab">График</a></li>
-            <li role="presentation"><a href="#mtable" aria-controls="mtable" role="tab" data-toggle="tab">Таблица</a></li>
-
-        </ul>
-
-
-        <div class="tab-content">
-
-            <div role="tabpanel" class="tab-pane active" id="chart" style="width: 100%; margin-top: 20px;">
-                <div id="container" class="container well" data-highcharts-chart="0"></div>
-
-            </div>
-
-            <div role="tabpanel" class="tab-pane" id="mtable">
-                <div class="container well">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Дата</th><th>Вес</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for meas in measuring %}
-                        <tr>
-                            <td>{{ meas.date|date("d.m.Y H:i") }}</td>
-                            <td>{{ meas.value }}</td>
-                            <td><button class="btn btn-small btn-primary" type="button" data-id="{{ meas.id }}">Стабильность ряда</button></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-
-                </table>
-                </div>
-            </div>
-        </div>
-
+<div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3"><a href="#chart">График</a></li>
+        <li class="tab col s3"><a class="active" href="#mtable">Таблица</a></li>
+      </ul>
     </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="stability_range_modal" aria-labelledby="mySmallModalLabel" aria-hidden="true"
-    style="margin-top: 150px;">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content" style="padding: 20px;">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <h3>Стабильность ряда:<span class="label label-success" id="stability_range"></span></h3>
-            </div>
-        </div>
+    <div id="chart" class="col s12">
+		<div id="container" class="container well" data-highcharts-chart="0"></div>
+	</div>
+    <div id="mtable" class="col s12">
+		<table class="bordered striped">
+			<thead>
+			<tr>
+				<th>Дата</th>
+				<th>Вес</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for meas in measuring %}
+				<tr>
+					<td>{{ meas.date|date("d.m.Y H:i") }}</td>
+					<td>{{ meas.value }}</td>
+					<td>
+						<a class="waves-effect waves-teal btn-flat" data-id="{{ meas.id }}" href="#stability_range_modal">Стабильность ряда</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+  </div>
+ 
+    <div class="modal" id="stability_range_modal">
+		<div class="modal-content">
+			<p>Стабильность ряда:<span class="label label-success" id="stability_range"></span></p>
+		</div>
     </div>
 
 {% endblock %}
@@ -67,13 +53,13 @@
     <script>
     $(function(){
 
-    $("button[data-id]").on("click", function(){
+    $("a[data-id]").on("click", function(){
         var id = $(this).data('id');
         $.post(Routing.generate('get_stability_range'),{data: id}, function(data) {
             console.log(data);
             $('#stability_range').text(data.stabilityRange.stability_range);
             $('#stability_range_modal').modal();
-
+			$('.modal').modal(); // vjalexp modal?
         });
     });
 

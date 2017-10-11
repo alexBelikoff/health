@@ -29,7 +29,11 @@
 					<td>{{ meas.date|date("d.m.Y H:i") }}</td>
 					<td>{{ meas.value }}</td>
 					<td>
-						<a class="waves-effect waves-teal btn-flat" data-id="{{ meas.id }}" href="#stability_range_modal">Стабильность ряда</a>
+                        <a class="modal-trigger waves-effect waves-teal btn-flat"
+                           data-id="{{ meas.id }}"
+                           href="#stability_range_modal">
+                            Стабильность ряда
+                        </a>
 					</td>
 				</tr>
 				{% endfor %}
@@ -38,9 +42,9 @@
 	</div>
   </div>
  
-    <div class="modal" id="stability_range_modal">
+    <div id="stability_range_modal" class="modal">
 		<div class="modal-content">
-			<p>Стабильность ряда:<span class="label label-success" id="stability_range"></span></p>
+			<h4>Стабильность ряда: <span class="badge" id="stability_range"> </span></h4>
 		</div>
     </div>
 
@@ -51,15 +55,14 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script>
-    $(function(){
+    $(document).ready(function() {
 
     $("a[data-id]").on("click", function(){
+        $('#stability_range_modal').modal();
         var id = $(this).data('id');
         $.post(Routing.generate('get_stability_range'),{data: id}, function(data) {
             console.log(data);
             $('#stability_range').text(data.stabilityRange.stability_range);
-            $('#stability_range_modal').modal();
-			$('.modal').modal(); // vjalexp modal?
         });
     });
 

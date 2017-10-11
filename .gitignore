@@ -6,4 +6,6 @@
 /vendor/
 /web/bundles/
 .idea/
+/web/
 /app/config/bootstrap.php.cache
+app/bootstrap.php.cache

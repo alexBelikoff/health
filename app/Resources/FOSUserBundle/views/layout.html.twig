@@ -18,7 +18,8 @@
         <meta name="keywords" content="{% block keywords %}{% endblock %}" />
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ '/bundles/app/css/normalize.css' }}" />
-            <link rel="stylesheet" href="{{ '/bundles/app/css/jquery-ui.theme.min.css' }}" />
+            <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+            {#<link rel="stylesheet" href="{{ '/bundles/app/css/jquery-ui.theme.min.css' }}" />#}
             <link rel="stylesheet" href="{{ '/bundles/app/css/jquery.datetimepicker.css' }}" />
             <link rel="stylesheet" href="{{ '/bundles/app/css/animate.min.css' }}" />
             <link rel="stylesheet" href="{{ '/bundles/app/css/et-icons.css' }}" />
@@ -66,6 +67,8 @@
 
     {% block javascripts  %}
         <script src="{{ asset('/bundles/app/js/jquery-1.12.0.min.js') }}"></script>
+        {#<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>#}
+        {#<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>#}
         <script src="{{ asset('/bundles/app/js/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('/bundles/app/js/bootstrap.js') }}"></script>
         <script src="{{ asset('/bundles/fosjsrouting/js/router.js') }}"></script>

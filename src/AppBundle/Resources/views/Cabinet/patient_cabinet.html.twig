@@ -16,6 +16,7 @@
         {#<div id="container" style="height: 400px; min-width: 600px"></div>#}
 	</div>
     <div id="mtable" class="col s12">
+        <h5>Утром</h5>
 		<table class="bordered striped">
 			<thead>
 			<tr>
@@ -39,6 +40,30 @@
 				{% endfor %}
 			</tbody>
 		</table>
+        <h5>Вечером</h5>
+        <table class="bordered striped">
+            <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Вес</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for meas in measuring %}
+                <tr>
+                    <td>{{ meas.date|date("d.m.Y H:i") }}</td>
+                    <td>{{ meas.value }}</td>
+                    <td>
+                        <a class="modal-trigger waves-effect waves-teal btn-flat"
+                           data-id="{{ meas.id }}"
+                           href="#stability_range_modal">
+                            Стабильность ряда
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 	</div>
   </div>
  
@@ -103,6 +128,9 @@
     var url = Routing.generate('cabinet');
         $.post(url, function(data) {
             var measuring = data.measuring;
+            var measuring2 = data.measuring2;
+            console.log(measuring);
+            console.log(measuring2);
             Highcharts.stockChart('container', {
 
                 rangeSelector: {
@@ -117,7 +145,7 @@
                 },
 
                 subtitle: {
-                    text: 'Кликните и виделите область диаграммы, чтобы увеличить маштаб'
+                    text: 'Кликните и выделите область диаграммы, чтобы увеличить маштаб'
                 },
 
                 xAxis: {
@@ -137,20 +165,33 @@
                     /*layout: 'vertical',
                      align: 'right',
                      verticalAlign: 'middle',*/
-                    enabled: false
+                    enabled: true
                 },
 
                 title: {
                     text: 'Вес'
                 },
 
+                navigator: {
+                    enabled: false
+                },
+
                 series: [{
-                    name: 'Динамика значений веса',
+                    name: 'Динамика значений веса утром',
+                    showInNavigator: false,
                     data: measuring,
+                    tooltip: {
+                        valueDecimals: 2
+                        }
+                    },{
+                    name: 'Динамика значений веса вечером',
+                    showInNavigator: false,
+                    data: measuring2,
                     tooltip: {
                         valueDecimals: 2
                     }
                 }]
+
 
             }, function (chart) {
                 // apply the date pickers

@@ -17,6 +17,7 @@ use AppBundle\Entity\MeasuringType;
 use AppBundle\Form\Type\MeasuringType as MeasuringForm;
 use AppBundle\Form\Type\PatientType as PatientForm;
 use AppBundle\Form\Type\DoctorType as DoctorForm;
+/*use Doctrine\ORM\EntityManager;*/
 /*
  * TODO: Разнести по разным контроллерам!!
  */
@@ -119,7 +120,31 @@ class DefaultController extends Controller
             $repository = $this->getDoctrine()->getRepository('AppBundle:Measuring');
             $measuringModel = $this->get('health.measuring_model');
             $normalizedMeasuring = $measuringModel->normalizeMeasuring($repository->getMeasuringByPatient($patient));
-            $response = new JsonResponse(['measuring' => $normalizedMeasuring]);
+
+            /*$connection = $this->em->getConnection();
+            $statement = $connection->prepare("select * from public.get_patient_values(5,1)");
+            $normalizedMeasuring2 = $statement->execute()->fetch();*/
+
+            $normalizedMeasuring2 = [
+                [                    1507035520000,                        69.5               ],
+                [                    1507036060000,                        69.1               ],
+                [                    1507036060000,                        72               ],
+                [                    1507036120000,                        74.5               ],
+                [                    1507036120000,                        77               ],
+                [                    1507036120000,                        78               ],
+                [                    1507036180000,                        81               ],
+                [                    1507036180000,                        80.5               ],
+                [                    1507036180000,                        80.9               ],
+                [                    1507045600000,                        80.2               ],
+                [                    1507045600000,                        80.1               ],
+                [                    1507045600000,                        79               ],
+                [                    1507045600000,                        78               ],
+                [                    1507045600000,                        79.2               ],
+                [                    1507045600000,                        79.5               ],
+                [                    1507045600000,                        81               ],
+                [                    1507045600000,                        81.3               ]
+            ];
+            $response = new JsonResponse(['measuring' => $normalizedMeasuring, 'measuring2' => $normalizedMeasuring2]);
             return $response;
         }
         return $this->render('AppBundle:Cabinet:patient_cabinet.html.twig',['measuring' => $measuring]);

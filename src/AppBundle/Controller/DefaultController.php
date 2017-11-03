@@ -115,35 +115,60 @@ class DefaultController extends Controller
     public function patientCabinetAction(Request $request)
     {
         $patient = $this->getUser()->getPatient();
+        $patientMeas = $this->getUser()->getPatient();
         $measuring = $patient->getMeasuring();
         if ($request->isXmlHttpRequest()) {
             $repository = $this->getDoctrine()->getRepository('AppBundle:Measuring');
             $measuringModel = $this->get('health.measuring_model');
             $normalizedMeasuring = $measuringModel->normalizeMeasuring($repository->getMeasuringByPatient($patient));
 
-            /*$connection = $this->em->getConnection();
-            $statement = $connection->prepare("select * from public.get_patient_values(5,1)");
-            $normalizedMeasuring2 = $statement->execute()->fetch();*/
+            //$normalizedMeasuring2 = $measuringModel->normalizeMeasuring2($repository->getMeasuringByPatient2($patientMeas));
 
             $normalizedMeasuring2 = [
-                [                    1507035520000,                        69.5               ],
-                [                    1507036060000,                        69.1               ],
-                [                    1507036060000,                        72               ],
-                [                    1507036120000,                        74.5               ],
-                [                    1507036120000,                        77               ],
-                [                    1507036120000,                        78               ],
-                [                    1507036180000,                        81               ],
-                [                    1507036180000,                        80.5               ],
-                [                    1507036180000,                        80.9               ],
-                [                    1507045600000,                        80.2               ],
-                [                    1507045600000,                        80.1               ],
-                [                    1507045600000,                        79               ],
-                [                    1507045600000,                        78               ],
-                [                    1507045600000,                        79.2               ],
-                [                    1507045600000,                        79.5               ],
-                [                    1507045600000,                        81               ],
-                [                    1507045600000,                        81.3               ]
+                [                    1508050800000,                        96.1               ],
+                [                    1508086800000,                        96.2               ],
+                [                    1508137200000,                        96.3               ],
+                [                    1508173200000,                        96.4               ],
+                [                    1508223600000,                        96.6             ],
+                [                    1508259600000,                        96.2             ],
+                [                    1508310000000,                        96.4             ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.5             ],
+                [                    1508310000000,                        96.3              ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.8               ],
+                [                    1508310000000,                        96.2             ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.8               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.9               ],
+                [                    1508310000000,                        96.1               ],
+                [                    1509210000000,                        96.2               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.1               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1508310000000,                        96.3               ],
+                [                    1509386400000,                        96.2               ],
+                [                    1509559200000,                        96.4               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1509609600000,                        96.2               ],
+                [                    1508310000000,                        96.2               ],
+                [                    1509645600000,                        96.2               ],
+                [                    1509696000000,                        96.2               ],
+                [                    1509732000000,                        96.5               ],
+                [                    1509782400000,                        96.7               ],
+                [                    1509818400000,                        96.2               ],
+                [                    1509868800000,                        96.2               ],
+                [                    1509904800000,                        96.2               ]
             ];
+
             $response = new JsonResponse(['measuring' => $normalizedMeasuring, 'measuring2' => $normalizedMeasuring2]);
             return $response;
         }

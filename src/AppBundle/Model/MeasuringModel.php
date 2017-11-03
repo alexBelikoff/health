@@ -28,6 +28,15 @@ class MeasuringModel
         return $normalizedMeasuring;
     }
 
+    public function normalizeMeasuring2 (array $measuring2)
+    {
+        $normalizedMeasuring2 = [];
+        for($i = 0, $j = count($measuring2); $i < $j; ++$i){
+            $normalizedMeasuring2[] = [($measuring2[$i]['measure_date']->getTimestamp()*1000), (float)$measuring2[$i]['value']];
+        }
+        return $normalizedMeasuring2;
+    }
+
     public function getStabilityRange(int $id)
     {
         $connection = $this->em->getConnection();

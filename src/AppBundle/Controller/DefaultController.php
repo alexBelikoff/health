@@ -115,61 +115,12 @@ class DefaultController extends Controller
     public function patientCabinetAction(Request $request)
     {
         $patient = $this->getUser()->getPatient();
-        $patientMeas = $this->getUser()->getPatient();
-        $measuring = $patient->getMeasuring();
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Measuring');
+        $measuring = $repository->getMeasuringByPatientWithStab($patient);
         if ($request->isXmlHttpRequest()) {
-            $repository = $this->getDoctrine()->getRepository('AppBundle:Measuring');
             $measuringModel = $this->get('health.measuring_model');
-            $normalizedMeasuring = $measuringModel->normalizeMeasuring($repository->getMeasuringByPatient($patient));
-
-            //$normalizedMeasuring2 = $measuringModel->normalizeMeasuring2($repository->getMeasuringByPatient2($patientMeas));
-
-            $normalizedMeasuring2 = [
-                [                    1508050800000,                        96.1               ],
-                [                    1508086800000,                        96.2               ],
-                [                    1508137200000,                        96.3               ],
-                [                    1508173200000,                        96.4               ],
-                [                    1508223600000,                        96.6             ],
-                [                    1508259600000,                        96.2             ],
-                [                    1508310000000,                        96.4             ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.5             ],
-                [                    1508310000000,                        96.3              ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.8               ],
-                [                    1508310000000,                        96.2             ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.8               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.9               ],
-                [                    1508310000000,                        96.1               ],
-                [                    1509210000000,                        96.2               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.1               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1508310000000,                        96.3               ],
-                [                    1509386400000,                        96.2               ],
-                [                    1509559200000,                        96.4               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1509609600000,                        96.2               ],
-                [                    1508310000000,                        96.2               ],
-                [                    1509645600000,                        96.2               ],
-                [                    1509696000000,                        96.2               ],
-                [                    1509732000000,                        96.5               ],
-                [                    1509782400000,                        96.7               ],
-                [                    1509818400000,                        96.2               ],
-                [                    1509868800000,                        96.2               ],
-                [                    1509904800000,                        96.2               ]
-            ];
-
-            $response = new JsonResponse(['measuring' => $normalizedMeasuring, 'measuring2' => $normalizedMeasuring2]);
+            $normalizedMeasuring = $measuringModel->normalizeMeasuringWithStab($measuring);
+            $response = new JsonResponse(['measuring' => $normalizedMeasuring]);
             return $response;
         }
         return $this->render('AppBundle:Cabinet:patient_cabinet.html.twig',['measuring' => $measuring]);

@@ -28,13 +28,22 @@ class MeasuringModel
         return $normalizedMeasuring;
     }
 
-    public function normalizeMeasuring2 (array $measuring2)
+    public function normalizeMeasuringWithStab (array $measuring)
     {
-        $normalizedMeasuring2 = [];
-        for($i = 0, $j = count($measuring2); $i < $j; ++$i){
-            $normalizedMeasuring2[] = [($measuring2[$i]['measure_date']->getTimestamp()*1000), (float)$measuring2[$i]['value']];
+        $normalizedMeasuring = [];
+        for($i = 0, $j = count($measuring); $i < $j; ++$i){
+            $d = new \DateTime($measuring[$i]['measure_date']);
+            $normalizedMeasuring['morning'][] = [
+                ($d->getTimestamp()*1000),
+                (float)$measuring[$i]['morning_value'],
+                ];
+            $normalizedMeasuring['evening'][] = [
+                ($d->getTimestamp()*1000),
+                (float)$measuring[$i]['evening_value'],
+            ];
         }
-        return $normalizedMeasuring2;
+        dump($normalizedMeasuring);
+        return $normalizedMeasuring;
     }
 
     public function getStabilityRange(int $id)

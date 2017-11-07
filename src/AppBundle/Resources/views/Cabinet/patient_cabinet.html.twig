@@ -16,63 +16,29 @@
         {#<div id="container" style="height: 400px; min-width: 600px"></div>#}
 	</div>
     <div id="mtable" class="col s12">
-        <h5>Утром</h5>
 		<table class="bordered striped">
 			<thead>
 			<tr>
 				<th>Дата</th>
-				<th>Вес</th>
+				<th>Утро</th>
+                <th>Вечер</th>
+                <th>Стабильность ряда</th>
 			</tr>
 			</thead>
 			<tbody>
 			{% for meas in measuring %}
 				<tr>
-					<td>{{ meas.date|date("d.m.Y H:i") }}</td>
-					<td>{{ meas.value }}</td>
-					<td>
-                        <a class="modal-trigger waves-effect waves-teal btn-flat"
-                           data-id="{{ meas.id }}"
-                           href="#stability_range_modal">
-                            Стабильность ряда
-                        </a>
-					</td>
+					<td>{{ meas.measure_date|date("d.m.Y H:i") }}</td>
+					<td>{{ meas.morning_value }}</td>
+                    <td>{{ meas.evening_value }}</td>
+                    <td>{{ meas.stability_value }}</td>
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
-        <h5>Вечером</h5>
-        <table class="bordered striped">
-            <thead>
-            <tr>
-                <th>Дата</th>
-                <th>Вес</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for meas in measuring %}
-                <tr>
-                    <td>{{ meas.date|date("d.m.Y H:i") }}</td>
-                    <td>{{ meas.value }}</td>
-                    <td>
-                        <a class="modal-trigger waves-effect waves-teal btn-flat"
-                           data-id="{{ meas.id }}"
-                           href="#stability_range_modal">
-                            Стабильность ряда
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+
 	</div>
   </div>
- 
-    <div id="stability_range_modal" class="modal">
-		<div class="modal-content">
-			<h4>Стабильность ряда: <span class="badge" id="stability_range"> </span></h4>
-		</div>
-    </div>
-
 {% endblock %}
 
 {% block javascripts  %}
@@ -127,8 +93,8 @@
     );
     var url = Routing.generate('cabinet');
         $.post(url, function(data) {
-            var measuring = data.measuring;
-            var measuring2 = data.measuring2;
+            var measuring = data.measuring.morning;
+            var measuring2 = data.measuring.evening;
             console.log(measuring);
             console.log(measuring2);
             Highcharts.stockChart('container', {

@@ -17,24 +17,18 @@ class MeasuringRepository extends EntityRepository
         return $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
     }
 
-    /*public function getMeasuringByPatient3($patient)
-    {
-        $connection = $this->em->getConnection();
-        $statement = $connection->prepare("select * from public.get_patient_values(patient => :patient,1)");
-        $statement->bindValue('patient', $patient, \PDO::PARAM_INT);
-        $statement->execute();
-        return $statement->fetch();
-    }*/
-
-    public function getMeasuringByPatient2($patientMeas)
+    public function getMeasuringByPatientWithStab($patient)
     {
         $entityManager = $this->getEntityManager();
         $connection = $entityManager->getConnection();
-        $statement = $connection->prepare("select * from public.get_patient_values(5,1)");
+        $statement = $connection->prepare("SELECT measure_date, morning_value, evening_value, stability_value 
+            FROM public.get_patient_values(p_patient_id => :patient,p_measure_type_id => :measure_type)");
+        $statement->bindValue('patient', $patient->getId(), \PDO::PARAM_INT);
+        $statement->bindValue('measure_type', 1, \PDO::PARAM_INT);
         $statement->execute();
-        $patientMeas = $statement->fetchAll(\PDO::FETCH_ASSOC);
-        return $patientMeas;
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
+
 
     public function getLastMeasuringByPatient($patient)
     {

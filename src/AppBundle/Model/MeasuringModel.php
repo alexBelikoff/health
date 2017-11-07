@@ -42,7 +42,6 @@ class MeasuringModel
                 (float)$measuring[$i]['evening_value'],
             ];
         }
-        dump($normalizedMeasuring);
         return $normalizedMeasuring;
     }
 

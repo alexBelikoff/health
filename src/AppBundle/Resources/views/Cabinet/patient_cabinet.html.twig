@@ -16,27 +16,53 @@
         {#<div id="container" style="height: 400px; min-width: 600px"></div>#}
 	</div>
     <div id="mtable" class="col s12">
-		<table class="bordered striped">
-			<thead>
-			<tr>
-				<th>Дата</th>
-				<th>Утро</th>
-                <th>Вечер</th>
-                <th>Стабильность ряда</th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for meas in measuring %}
-				<tr>
-					<td>{{ meas.measure_date|date("d.m.Y H:i") }}</td>
-					<td>{{ meas.morning_value }}</td>
-                    <td>{{ meas.evening_value }}</td>
-                    <td>{{ meas.stability_value }}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-
+        <div class="input-field col s12">
+            <select>
+                <option value="1" selected>Вес</option>
+                <option value="2" disabled>Пульс</option>
+                <option value="3" disabled>Давление</option>
+            </select>
+            <label>Показание:</label>
+        </div>
+        <div class="input-field col s6">
+            <input type="text" class="datepicker">
+            <label>Период с:</label>
+        </div>
+        <div class="input-field col s6">
+            <input type="text" class="datepicker">
+            <label>Период по:</label>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table class="highlight bordered">
+                    <thead>
+                    <tr>
+                        <th>Дата и время</th>
+                        <th><i class="small material-icons">wb_sunny</i></th>
+                        <th><i class="small material-icons">cloud_circle</i></th>
+                        <th>Стабильность ряда</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for meas in measuring %}
+                        <tr>
+                            <td>{{ meas.measure_date|date("d.m.Y H:i") }}</td>
+                            <td>{{ meas.morning_value }}</td>
+                            <td>{{ meas.evening_value }}</td>
+                            <td><span class="new badge" data-badge-caption="стабильно">{{ meas.stability_value }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 right-align">
+                <button class="btn orange darken-2 waves-effect waves-light" type="submit" name="action">Сохранить
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
 	</div>
   </div>
 {% endblock %}
@@ -177,6 +203,30 @@
             this.onblur();
         }
     });
-</script>
+
+    $('.datepicker').pickadate({
+        //The title label to use for the month nav buttons
+        labelMonthNext: 'Следующий месяц',
+        labelMonthPrev: 'Последний месяц',
+//The title label to use for the dropdown selectors
+        labelMonthSelect: 'Выберите месяц',
+        labelYearSelect: 'Выберите год',
+//Months and weekdays
+        monthsFull: [ 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' ],
+        monthsShort: [ 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' ],
+        weekdaysFull: [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота' ],
+        weekdaysShort: [ 'ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ' ],
+//Materialize modified
+        weekdaysLetter: [ 'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' ],
+//Today and clear
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 5, // Creates a dropdown of 5 years to control year,
+        today: 'Сегодня',
+        clear: 'Очистить',
+        close: 'Выбрать',
+        closeOnSelect: false // Close upon selecting a date,
+    });
+
+    </script>
 
 {% endblock %}

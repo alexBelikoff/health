@@ -12,7 +12,7 @@
 			{% elseif is_granted('ROLE_PATIENT') %}
 				<li><a href="{{ path("cabinet") }}">Кабинет</a></li>
 				<li><a href="{{ path("cabinet_profile") }}">Профиль</a></li>
-				<li><a href="{{ path("cabinet_add_measuring_value") }}">Ввод показаний</a></li>
+				{#<li><a href="{{ path("cabinet_add_measuring_value") }}">Ввод показаний</a></li>#}
 				<li><a href="{{ path("cabinet_specialists") }}">Мои специалисты</a></li>
 				<li><a href="{{ path("fos_user_security_logout") }}">Выход</a></li>
 			{% elseif is_granted('ROLE_DOCTOR')  %}
@@ -34,7 +34,7 @@
 			{% elseif is_granted('ROLE_PATIENT') %}
 				<li><a href="{{ path("cabinet") }}">Кабинет</a></li>
 				<li><a href="{{ path("cabinet_profile") }}">Профиль</a></li>
-				<li><a href="{{ path("cabinet_add_measuring_value") }}">Ввод показаний</a></li>
+				{#<li><a href="{{ path("cabinet_add_measuring_value") }}">Ввод показаний</a></li>#}
 				<li><a href="{{ path("cabinet_specialists") }}">Мои специалисты</a></li>
 				<li><a href="{{ path("fos_user_security_logout") }}">Выход</a></li>
 			{% elseif is_granted('ROLE_DOCTOR')  %}

@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\VarDumper\VarDumper;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Doctor;
+use AppBundle\Entity\Patient;
 use AppBundle\Entity\Measuring;
 use AppBundle\Entity\MeasuringType;
 use AppBundle\Form\Type\MeasuringType as MeasuringForm;
@@ -249,6 +250,24 @@ class DefaultController extends Controller
             return $response;
         }else{
             return $this->redirectToRoute('cabinet');
+        }
+    }
+
+    /**
+     * @Route("/cabinet/specialists/get-patient-stat/{patient}", name="cabinet_specialists_get_patient_stat",
+     *      options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function getPatientStatAction(Request $request, Patient $patient)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Measuring');
+            $measuring = $repository->getMeasuringByPatientWithStab($patient);
+            return $this->render('AppBundle:Cabinet:doctor_patients_stat_modal.html.twig',
+                [
+                    'measuring' => $measuring,
+                    'patient'=> $patient,
+                ]);
         }
     }
 }

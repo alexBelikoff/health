@@ -18,6 +18,7 @@
                             <h4 class="">{{ patient.firstName }}  {{ patient.secondName }} {{ patient.lastName }}</h4>
                             <h6 class="">Рост: {{ patient.height }} см </h6>
                             <h6 class="">Вес: {{ patient.currentWeight.0.value }} кг</h6>
+                            <button class="btn btn-blue show_stat" data-patient-id="{{ patient.id }}">Посмотреть статистику</button>
                         </div>
                     </div>
 
@@ -32,4 +33,28 @@
         {% endfor %}
     </div>
 </div>
+    <div id="modal_container"></div>
+{% endblock %}
+
+{% block javascripts  %}
+    {{ parent() }}
+
+
+    <script>
+        $(function(){
+            $("button.show_stat").on("click", function(){
+                    var p_id = $(this).data("patient-id");
+                    $.post(Routing.generate('cabinet_specialists_get_patient_stat',{patient: p_id}), function(data) {
+                        if(data){
+                            $('#modal_container').html(data);
+                            $('#modal_patient_stat').modal();
+                            $('#modal_patient_stat').modal('open');
+
+                        }
+
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

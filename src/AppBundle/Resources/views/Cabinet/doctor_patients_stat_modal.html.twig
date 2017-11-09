@@ -1,0 +1,36 @@
+
+<!-- Modal Structure -->
+<div id="modal_patient_stat" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        {% if  patient is defined and measuring is defined %}
+        <h4>{{ patient.firstName }}  {{ patient.secondName }} {{ patient.lastName }}</h4>
+        <div class="row">
+            <div class="col s12">
+                <table class="highlight bordered">
+                    <thead>
+                    <tr>
+                        <th>Дата и время</th>
+                        <th><i class="small material-icons">wb_sunny</i></th>
+                        <th><i class="small material-icons">cloud_circle</i></th>
+                        <th>Стабильность ряда</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for meas in measuring %}
+                        <tr>
+                            <td>{{ meas.measure_date|date("d.m.Y H:i") }}</td>
+                            <td>{{ meas.morning_value }}</td>
+                            <td>{{ meas.evening_value }}</td>
+                            <td><span class="new badge" data-badge-caption="стабильно">{{ meas.stability_value }}</span></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {%  endif %}
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Закрыть</a>
+    </div>
+</div>

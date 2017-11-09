@@ -73,31 +73,7 @@
                 </div>
             </div>
         </form>
-        <h3>Список показаний:</h3>
-        <div class="row">
-            <div class="col s12">
-                <table class="highlight bordered">
-                    <thead>
-                    <tr>
-                        <th>Дата и время</th>
-                        <th><i class="small material-icons">wb_sunny</i></th>
-                        <th><i class="small material-icons">cloud_circle</i></th>
-                        <th>Стабильность ряда</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for meas in measuring %}
-                        <tr>
-                            <td>{{ meas.measure_date|date("d.m.Y H:i") }}</td>
-                            <td>{{ meas.morning_value }}</td>
-                            <td>{{ meas.evening_value }}</td>
-                            <td><span class="new badge" data-badge-caption="стабильно">{{ meas.stability_value }}</span></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
         <h3>Фильтр показаний:</h3>
         <form name="mySelectMeasure" method="POST" action="">
             <div class="row">
@@ -121,12 +97,82 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col s12 right-align">
-                    <button class="btn orange darken-2 waves-effect waves-light" type="submit" name="action">
+                <div class="col s12 center-align">
+                    <button class="btn orange lighten-1 waves-effect waves-light" type="submit" name="action">
                         <i class="material-icons right">filter_list</i>Применить фильтр</button>
                 </div>
             </div>
         </form>
+
+        <h3>Список показаний:</h3>
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">view_column</i>Вес</div>
+                <div class="collapsible-body">
+                    <table class="highlight bordered">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Дата и время</th>
+                            <th><i class="small material-icons">wb_sunny</i></th>
+                            <th><i class="small material-icons">cloud_circle</i></th>
+                            <th>Стабильность</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for meas in measuring %}
+                            <tr>
+                                <td><i class="material-icons">edit</i></td>
+                                <td>{{ meas.measure_date|date("d.m.Y H:i") }}</td>
+                                <td>{{ meas.morning_value }}</td>
+                                <td>{{ meas.evening_value }}</td>
+                                <td><span class="new badge" data-badge-caption="стабильно">{{ meas.stability_value }}</span></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">favorite</i>Пульс</div>
+                <div class="collapsible-body"><span>Ввод показания в разработке.</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">show_chart</i>Давление</div>
+                <div class="collapsible-body"><span>Ввод показания в разработке.</span></div>
+            </li>
+        </ul>
+
+        <a class="btn-floating btn-large waves-effect waves-light orange darken-2 tooltipped modal-trigger"
+           data-position="right"
+           data-delay="50"
+           data-tooltip="Отправить сообщениями лечащему врачу"
+           href="#modal1">
+                <i class="material-icons">message</i>
+        </a>
+
+        <!-- Modal -->
+        <div id="modal1" class="modal bottom-sheet">
+            <div class="modal-content">
+                <h4>Переписка с врачом</h4>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                                <label for="icon_prefix2">Текст сообщения</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Отправить</a>
+            </div>
+        </div>
+        <!-- //Modal -->
+
 	</div>
   </div>
 {% endblock %}
@@ -139,6 +185,9 @@
 
     <script>
     $(document).ready(function() {
+
+    $('.tooltipped').tooltip({delay: 50}); // тултип!
+    $('#modal1').modal(); // модал!
 
     $("a[data-id]").on("click", function(){
         $('#stability_range_modal').modal();

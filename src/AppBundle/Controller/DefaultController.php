@@ -124,8 +124,44 @@ class DefaultController extends Controller
             $response = new JsonResponse(['measuring' => $normalizedMeasuring]);
             return $response;
         }
-        return $this->render('AppBundle:Cabinet:patient_cabinet.html.twig',['measuring' => $measuring]);
 
+        $measurin1 = new Measuring();
+        $measurin2 = new Measuring();
+        $form1 = $this->get('form.factory')->createNamedBuilder('form1name', MeasuringForm::class,  $measurin1)
+            ->getForm();
+
+        $form2 = $this->get('form.factory')->createNamedBuilder('form2name',MeasuringForm::class,  $measurin2)
+            ->getForm();
+        $form1->handleRequest($request);
+        $form2->handleRequest($request);
+        if('POST' === $request->getMethod()) {
+            $patient = $this->getUser()->getPatient();
+            if ($request->request->has('form1name')) {
+                if ($form1->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    $measurin1 = $form1->getData();
+                    $em->persist($measurin1);
+                    $measurin1->setPatient($patient);
+                    $em->flush();
+                }
+            }
+
+            if ($request->request->has('form2name')) {
+                if ($form2->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    $measurin2 = $form2->getData();
+                    $em->persist($measurin2);
+                    $measurin2->setPatient($patient);
+                    $em->flush();
+                }
+            }
+            return $this->redirectToRoute('cabinet');
+        }
+        return $this->render('AppBundle:Cabinet:patient_cabinet.html.twig',
+                [
+                    'form1' => $form1->createView(),
+                    'form2' => $form2->createView(),
+                    'measuring' => $measuring]);
     }
 
     /**
@@ -144,11 +180,17 @@ class DefaultController extends Controller
      */
     public function addMeasuringValueAction(Request $request)
     {
-        $measurin = new Measuring();
-        $form = $this->createForm(MeasuringForm::class, $measurin);
-        $form->handleRequest($request);
+        $measurin1 = new Measuring();
+        $measurin2 = new Measuring();
+        $form1 = $this->get('form.factory')->createNamedBuilder('form1name', MeasuringForm::class,  $measurin1)
+            ->getForm();
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $form2 = $this->get('form.factory')->createNamedBuilder('form2name',MeasuringForm::class,  $measurin2)
+            ->getForm();
+        //$form = $this->createForm(MeasuringForm::class, $measurin);
+        //$form->handleRequest($request);
+
+        /*if ($form->isSubmitted() && $form->isValid()) {
             $patient = $this->getUser()->getPatient();
             $typeRepository = $this->getDoctrine()->getRepository(MeasuringType::class);
             $type = $typeRepository->findOneBy(['type' => 'weight']);
@@ -159,9 +201,42 @@ class DefaultController extends Controller
             $measurin->setType($type);
             $em->flush();
             return $this->redirectToRoute('cabinet');
-        }
+        }*/
+        $form1->handleRequest($request);
+        $form2->handleRequest($request);
+        if('POST' === $request->getMethod()) {
+            dump(1);
+            $typeRepository = $this->getDoctrine()->getRepository(MeasuringType::class);
+            $patient = $this->getUser()->getPatient();
+            if ($request->request->has('form1name')) {
+                dump(2);
+                if ($form1->isValid()) {
+                    dump(3);
+                    $em = $this->getDoctrine()->getManager();
+                    $measurin1 = $form1->getData();
+                    $em->persist($measurin1);
+                    $measurin1->setPatient($patient);
+                    $em->flush();
+                }
+            }
+
+            if ($request->request->has('form2name')) {
+                dump(4);
+                if ($form2->isValid()) {
+                    dump(5);
+                    $em = $this->getDoctrine()->getManager();
+                    $measurin2 = $form2->getData();
+                    $em->persist($measurin2);
+                    $measurin2->setPatient($patient);
+                    $em->flush();
+
+                }
+            }
+            return $this->redirectToRoute('cabinet');
+    }
         return $this->render('AppBundle:Cabinet:measuring_add_value.html.twig',
-            ['form' => $form->createView(),]);
+            ['form1' => $form1->createView(),
+            'form2' => $form2->createView(),]);
     }
     /**
      * @Route("/cabinet/specialists", name="cabinet_specialists", options = { "expose" = true })

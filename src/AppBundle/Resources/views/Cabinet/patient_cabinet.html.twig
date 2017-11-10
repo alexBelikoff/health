@@ -18,7 +18,7 @@
     <div id="mtable" class="col s12">
 
         <p>Ввод показаний:</p>
-        <form name="myInputMeasure" method="POST" action="">
+
             <div class="col s12 m6">
                 <div class="card horizontal">
                     <div class="card-image">
@@ -26,22 +26,9 @@
                     </div>
                     <div class="card-stacked">
                         <div class="card-content">
-                            <div class="input-field col s6">
-                                <select>
-                                    <option value="1" selected>Вес</option>
-                                    <option value="2" disabled>Пульс</option>
-                                    <option value="3" disabled>Давление</option>
-                                </select>
-                                <label>Показание:</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input placeholder="75,5" id="meaning" type="text" class="validate">
-                                <label for="meaning">Значение</label>
-                            </div>
-                        </div>
-                        <div class="card-action">
-                            {#<button class="btn orange waves-effect waves-light btn-flat" type="submit" name="action">Сохранить</button>#}
-                            <a href="#">Сохранить</a>
+                            {{ form_start(form1) }}
+                            {{ form_widget(form1) }}
+                            {{ form_end(form1) }}
                         </div>
                     </div>
                 </div>
@@ -53,27 +40,14 @@
                     </div>
                     <div class="card-stacked">
                         <div class="card-content">
-                            <div class="input-field col s6">
-                                <select>
-                                    <option value="1" selected>Вес</option>
-                                    <option value="2" disabled>Пульс</option>
-                                    <option value="3" disabled>Давление</option>
-                                </select>
-                                <label>Показание:</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input placeholder="75,5" id="meaning" type="text" class="validate">
-                                <label for="meaning">Значение</label>
-                            </div>
-                        </div>
-                        <div class="card-action">
-                            {#<button class="btn black waves-effect waves-light btn-flat" type="submit" name="action">Сохранить</button>#}
-                            <a href="#">Сохранить</a>
+                            {{ form_start(form2) }}
+                            {{ form_widget(form2) }}
+                            {{ form_end(form2) }}
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+
 
         <p>Фильтр показаний:</p>
         <form name="mySelectMeasure" method="POST" action="">
@@ -183,6 +157,7 @@
     {#<script src="https://code.highcharts.com/highcharts.js"></script>#}
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="{{ asset('/bundles/app/js/jquery.datetimepicker.full.min.js') }}"></script>
 
     <script>
     $(document).ready(function() {
@@ -340,6 +315,15 @@
         close: 'Выбрать',
         closeOnSelect: false // Close upon selecting a date,
     });
+    $.datetimepicker.setLocale('ru');
+    $('form #form1name_date, form #form2name_date').datetimepicker(
+        {
+            formatDate:'d.m.Y',
+            format:'d.m.Y H:i',
+            lang:'ru',
+        }
+    );
+
 
     </script>
 

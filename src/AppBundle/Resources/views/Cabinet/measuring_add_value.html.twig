@@ -5,9 +5,28 @@
 
 {% block body %}
     <div  class="container" style="margin-top: 150px;">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+        <table>
+            <tr>
+                <th>Утро</th>
+                <th>Вечер</th>
+            </tr>
+            <tr>
+                <td>
+                    {{ form_start(form1) }}
+                    {{ form_widget(form1) }}
+                    {{ form_end(form1) }}
+                </td>
+                <td>
+                    {{ form_start(form2) }}
+                    {{ form_widget(form2) }}
+                    {{ form_end(form2) }}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="button" value="Сохранить" onclick="submitForms()" /></td>
+            </tr>
+        </table>
     </div>
 {% endblock %}
 
@@ -18,14 +37,20 @@
     <script>
         $(function(){
             $.datetimepicker.setLocale('ru');
-            $('form #measuring_date').datetimepicker(
+            $('form #form1name_date, form #form2name_date').datetimepicker(
                 {
                     formatDate:'d.m.Y',
                     format:'d.m.Y H:i',
                     lang:'ru',
                 }
             );
+
+
         });
+        function submitForms(){
+            $('form[name="form1name"]').submit();
+            $('form[name="form2name"]').submit();
+        }
     </script>
 
 {% endblock %}

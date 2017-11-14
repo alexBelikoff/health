@@ -425,13 +425,21 @@ class DefaultController extends Controller
     {
         $provider = $this->get('fos_message.provider');
         $thread = $provider->getThread($id);
-        $userCreated = $thread->getCreatedBy();
+        $threadUserCreated = $thread->getCreatedBy();
+        $userCreated = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($threadUserCreated->getId());
         if ($this->get('security.authorization_checker')->isGranted('ROLE_PATIENT')){
-            $createdBy = $userCreated->getPatient();
-        }elseif($this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')){
-            $createdBy = $userCreated->getDoctor();
-        }
+            $createdBy = $this->getDoctrine()
+                ->getRepository(Patient::class)
+                ->find($userCreated->getPatient()->getId());
 
+        }elseif($this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')){
+            $createdBy = $this->getDoctrine()
+                ->getRepository(Doctor::class)
+                ->find($userCreated->getPatient()->getId());
+        }
+        dump($userCreated);
         return $this->render('AppBundle:Cabinet:thread.html.twig',
             [
                 'thread' => $thread,

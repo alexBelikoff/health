@@ -46,11 +46,11 @@
                     <select name="messages_recipient">
                         {% if is_granted('ROLE_PATIENT') %}
                             {% for patient in recipients %}
-                                <option value="{{ patient.id }}">{{ patient.firstName }}</option>
+                                <option value="{{ patient.id }}">{{ patient.lastName }} {{ patient.firstName }} {{ patient.secondName }}</option>
                             {% endfor %}
                         {% elseif  is_granted('ROLE_DOCTOR') %}
                             {% for doctor in recipients %}
-                                <option value="{{ doctor.id }}">{{ doctor.firstName }}</option>
+                                <option value="{{ doctor.id }}">{{ doctor.lastName }} {{ doctor.firstName }} {{ doctor.secondName }}</option>
                             {% endfor %}
                         {% endif %}
                     </select>

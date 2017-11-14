@@ -4,40 +4,85 @@
 {% endblock %}
 
 {% block body %}
-
-    <h5>Входящие</h5>
-    <ul>
-        {% for threadIn in threadsIn %}
-            <li><a href="{{ path('cabinet_get_thread', {'id':threadIn.id}) }}">{{  threadIn.subject}}</a></li>
-        {% endfor %}
-    </ul>
-    <br>
-    <br>
-    <h5>Исходящие</h5>
-    {% for threadOut in threadsOut %}
-        <li><a href="{{ path('cabinet_get_thread', {'id':threadOut.id}) }}">{{  threadOut.subject }}</a></li>
-    {% endfor %}
-
-
-
-    <h1>Написать сообщение</h1>
-    <form method="post" action="{{ path('cabinet_sent_message') }}">
-        <select name="messages_recipient">
-            {% if is_granted('ROLE_PATIENT') %}
-            {% for patient in recipients %}
-                <option value="{{ patient.id }}">{{ patient.firstName }}</option>
-            {% endfor %}
-            {% elseif  is_granted('ROLE_DOCTOR') %}
-                {% for doctor in recipients %}
-                    <option value="{{ doctor.id }}">{{ doctor.firstName }}</option>
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <ul class="collection with-header">
+                <li class="collection-header"><h4>Входящие</h4></li>
+                {% for threadIn in threadsIn %}
+                    <li class="collection-item">
+                        <div>
+                            {{threadIn.subject}}
+                            <a class="secondary-content" href="{{ path('cabinet_get_thread', {'id':threadIn.id}) }}">
+                                 <i class="material-icons">question_answer</i>
+                            </a>
+                        </div>
+                    </li>
                 {% endfor %}
-            {% endif %}
-        </select>
-        <input type="text" name="messages_subjec">
-        <textarea name="messages_body"></textarea>
+            </ul>
+            <!-- -->
+            <ul class="collection with-header">
+                <li class="collection-header"><h4>Исходящие</h4></li>
+                {% for threadOut in threadsOut %}
+                    <li class="collection-item">
+                        <div>
+                            {{  threadOut.subject }}
+                            <a class="secondary-content" href="{{ path('cabinet_get_thread', {'id':threadOut.id}) }}">
+                                <i class="material-icons">question_answer</i>
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 
-    <input type="submit" value="Послать">
-    </form>
+    <div class="row">
+        <form class="col s12" method="post" action="{{ path('cabinet_sent_message') }}">
+            <p>Написать сообщение:</p>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select name="messages_recipient">
+                        {% if is_granted('ROLE_PATIENT') %}
+                            {% for patient in recipients %}
+                                <option value="{{ patient.id }}">{{ patient.firstName }}</option>
+                            {% endfor %}
+                        {% elseif  is_granted('ROLE_DOCTOR') %}
+                            {% for doctor in recipients %}
+                                <option value="{{ doctor.id }}">{{ doctor.firstName }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    <label>Выберите собеседника</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="Кратко изложите причину обращения..." id="first_name" type="text" name="messages_subjec" class="validate" >
+                    <label for="messages_subjec">Тема сообщения</label>
+                </div>
+            </div>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="textarea1" name="messages_body" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Текст сообщения</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light" type="submit">Отправить
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
 {% endblock %}
 
 {% block javascripts  %}

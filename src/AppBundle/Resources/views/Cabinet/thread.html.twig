@@ -1,0 +1,42 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block menu %}
+    {{ include('AppBundle::menu.html.twig') }}
+{% endblock %}
+
+{% block body %}
+
+    <h5>{{ thread.subject }}</h5>
+    <h5>{{ createdBy.lastName }} {{ createdBy.firstName }} {{ createdBy.secondName }}</h5>
+
+
+
+    {% if thread is defined%}
+        {% for message in thread.messages %}
+            <h5>{{ message.body }}</h5>
+            <h6>{{ message.createdAt|date("d.m.Y H:i") }}</h6>
+        {% endfor %}
+    {% endif %}
+
+
+        <h1>Ответить</h1>
+    <form method="post" action="{{ path('cabinet_message_reply', {'id': thread.id}) }}">
+
+        <textarea name="messages_body"></textarea>
+
+    <input type="submit" value="Ответить">
+
+{% endblock %}
+
+{% block javascripts  %}
+    {{ parent() }}
+
+
+    <script>
+        $(function(){
+
+
+        });
+
+    </script>
+
+{% endblock %}

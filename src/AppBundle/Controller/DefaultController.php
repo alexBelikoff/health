@@ -205,13 +205,10 @@ class DefaultController extends Controller
         $form1->handleRequest($request);
         $form2->handleRequest($request);
         if('POST' === $request->getMethod()) {
-            dump(1);
             $typeRepository = $this->getDoctrine()->getRepository(MeasuringType::class);
             $patient = $this->getUser()->getPatient();
             if ($request->request->has('form1name')) {
-                dump(2);
                 if ($form1->isValid()) {
-                    dump(3);
                     $em = $this->getDoctrine()->getManager();
                     $measurin1 = $form1->getData();
                     $em->persist($measurin1);
@@ -221,9 +218,7 @@ class DefaultController extends Controller
             }
 
             if ($request->request->has('form2name')) {
-                dump(4);
                 if ($form2->isValid()) {
-                    dump(5);
                     $em = $this->getDoctrine()->getManager();
                     $measurin2 = $form2->getData();
                     $em->persist($measurin2);
@@ -343,6 +338,128 @@ class DefaultController extends Controller
                     'measuring' => $measuring,
                     'patient'=> $patient,
                 ]);
+        }
+    }
+
+    /**
+     * @Route("/cabinet/messages", name="cabinet_messages",
+     *      options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function messagesAction()
+    {
+        $provider = $this->get('fos_message.provider');
+        $threadsIn = $provider->getInboxThreads();
+        $threadsOut = $provider->getSentThreads();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_PATIENT')){
+            $patient = $this->getUser()->getPatient();
+            $recipients = $patient->getDoctors();
+        }elseif($this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')){
+            $doctor = $this->getUser()->getDoctor();
+            $recipients = $doctor->getPatients();
+        }
+        return $this->render('AppBundle:Cabinet:messages.html.twig',
+            [
+                'threadsIn' => $threadsIn,
+                'threadsOut'=> $threadsOut,
+                'recipients' => $recipients,
+            ]);
+
+    }
+
+
+    /**
+     * @Route("/cabinet/message/sent", name="cabinet_sent_message",
+     *      options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function sentMessageAction(Request $request)
+    {
+        if('POST' === $request->getMethod()) {
+            $composer = $this->get('fos_message.composer');
+            $sender = $this->get('fos_message.sender');
+            $recipientId = $request->request->get('messages_recipient');;
+            if ($this->get('security.authorization_checker')->isGranted('ROLE_PATIENT')){
+                $doctorRepository = $this->getDoctrine()->getRepository(Doctor::class);
+                $doctor = $doctorRepository->find($recipientId);
+                $recipient = $doctor->getUser();
+            }elseif($this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')){
+                $patientRepository = $this->getDoctrine()->getRepository(Patient::class);
+                $patient = $patientRepository->find($recipientId);
+                $recipient = $patient->getUser();
+            }
+            $subject = $request->request->get('messages_subjec');
+            $body = $request->request->get('messages_body');
+            $message = $composer->newThread()
+                ->setSender($this->getUser())
+                ->addRecipient($recipient)
+                ->setSubject($subject)
+                ->setBody($body)
+                ->getMessage();
+            $sender->send($message);
+            return $this->redirectToRoute('cabinet_messages');
+        }
+    }
+
+    /**
+     * @Route("/cabinet/message/unread", name="cabinet_get_unread_message",
+     *      options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function getUnreadMessagesAction()
+    {
+        $provider = $this->get('fos_message.provider');
+        $unreadMessages = $provider->getNbUnreadMessages();
+        return $this->render('AppBundle:Cabinet:unread_messages.html.twig',
+            [
+                'unreadMessages' => $unreadMessages,
+            ]);
+    }
+
+    /**
+     * @Route("/cabinet/message/thread/{id}", name="cabinet_get_thread",
+     *      options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function getThreadAction($id)
+    {
+        $provider = $this->get('fos_message.provider');
+        $thread = $provider->getThread($id);
+        $userCreated = $thread->getCreatedBy();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_PATIENT')){
+            $createdBy = $userCreated->getPatient();
+        }elseif($this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')){
+            $createdBy = $userCreated->getDoctor();
+        }
+
+        return $this->render('AppBundle:Cabinet:thread.html.twig',
+            [
+                'thread' => $thread,
+                'createdBy' => $createdBy,
+            ]);
+    }
+
+
+    /**
+     * @Route("/cabinet/message/reply/thread/{id}", name="cabinet_message_reply",
+     *      options = { "expose" = true })
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function messageReplyAction(Request $request, $id)
+    {
+        if('POST' === $request->getMethod()) {
+            $provider = $this->get('fos_message.provider');
+            $thread = $provider->getThread($id);
+            $composer = $this->get('fos_message.composer');
+            $sender = $this->get('fos_message.sender');
+
+            $body = $request->request->get('messages_body');
+            $message = $composer->reply($thread)
+                ->setSender($this->getUser())
+                ->setBody($body)
+                ->getMessage();
+            $sender->send($message);
+            return $this->redirectToRoute('cabinet_get_thread', ['id' => $id]);
         }
     }
 }

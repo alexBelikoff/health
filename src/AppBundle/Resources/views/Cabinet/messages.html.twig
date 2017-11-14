@@ -1,0 +1,55 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block menu %}
+    {{ include('AppBundle::menu.html.twig') }}
+{% endblock %}
+
+{% block body %}
+
+    <h5>Входящие</h5>
+    <ul>
+        {% for threadIn in threadsIn %}
+            <li><a href="{{ path('cabinet_get_thread', {'id':threadIn.id}) }}">{{  threadIn.subject}}</a></li>
+        {% endfor %}
+    </ul>
+    <br>
+    <br>
+    <h5>Исходящие</h5>
+    {% for threadOut in threadsOut %}
+        <li><a href="{{ path('cabinet_get_thread', {'id':threadOut.id}) }}">{{  threadOut.subject }}</a></li>
+    {% endfor %}
+
+
+
+    <h1>Написать сообщение</h1>
+    <form method="post" action="{{ path('cabinet_sent_message') }}">
+        <select name="messages_recipient">
+            {% if is_granted('ROLE_PATIENT') %}
+            {% for patient in recipients %}
+                <option value="{{ patient.id }}">{{ patient.firstName }}</option>
+            {% endfor %}
+            {% elseif  is_granted('ROLE_DOCTOR') %}
+                {% for doctor in recipients %}
+                    <option value="{{ doctor.id }}">{{ doctor.firstName }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        <input type="text" name="messages_subjec">
+        <textarea name="messages_body"></textarea>
+
+    <input type="submit" value="Послать">
+    </form>
+{% endblock %}
+
+{% block javascripts  %}
+    {{ parent() }}
+
+
+    <script>
+        $(function(){
+
+
+        });
+
+    </script>
+
+{% endblock %}

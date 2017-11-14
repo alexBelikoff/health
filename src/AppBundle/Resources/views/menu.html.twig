@@ -14,11 +14,17 @@
 				<li><a href="{{ path("cabinet_profile") }}">Профиль</a></li>
 				{#<li><a href="{{ path("cabinet_add_measuring_value") }}">Ввод показаний</a></li>#}
 				<li><a href="{{ path("cabinet_specialists") }}">Мои специалисты</a></li>
+				<li><a href="{{ path("cabinet_messages") }}">Сообщения
+                        {{ render(controller(
+                        'AppBundle:Default:getUnreadMessages')) }}</a></li>
 				<li><a href="{{ path("fos_user_security_logout") }}">Выход</a></li>
 			{% elseif is_granted('ROLE_DOCTOR')  %}
 			<li><a href="{{ path("cabinet") }}">Кабинет</a></li>
 			<li><a href="{{ path("cabinet_profile") }}">Профиль</a></li>
 			<li><a href="{{ path("cabinet_clients") }}">Мои пациенты</a></li>
+				<li><a href="{{ path("cabinet_messages") }}">Сообщения
+                        {{ render(controller(
+                        'AppBundle:Default:getUnreadMessages')) }}</a></li>
 			<li><a href="#">Чего-нибудь еще</a></li>
 			<li><a href="{{ path("fos_user_security_logout") }}">Выход</a></li>
 			{% endif %}

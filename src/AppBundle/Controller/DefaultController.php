@@ -439,7 +439,6 @@ class DefaultController extends Controller
                 ->getRepository(Doctor::class)
                 ->find($userCreated->getPatient()->getId());
         }
-        dump($userCreated);
         return $this->render('AppBundle:Cabinet:thread.html.twig',
             [
                 'thread' => $thread,

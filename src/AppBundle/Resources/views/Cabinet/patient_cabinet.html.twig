@@ -12,6 +12,7 @@
       </ul>
     </div>
     <div id="chart" class="col s12">
+        <p>Вес</p>
 		<div id="container" class="container well" data-highcharts-chart="0"></div>
         {#<div id="container" style="height: 400px; min-width: 600px"></div>#}
 	</div>
@@ -214,6 +215,11 @@
             console.log(measuring2);
             Highcharts.stockChart('container', {
 
+                chart: {
+                    height: 650,
+                    type: 'line'
+                },
+
                 rangeSelector: {
                     selected: 1,
                     inputEnabled: true,
@@ -225,20 +231,20 @@
                     }
                 },
 
-                subtitle: {
+                /*subtitle: {
                     text: 'Кликните и выделите область диаграммы, чтобы увеличить маштаб'
-                },
+                },*/
 
                 xAxis: {
                     type: 'datetime',
                     title: {
-                        text: 'Значение'
+                        text: 'Дата'
                     }
                 },
 
                 yAxis: {
                     title: {
-                        text: 'Дата'
+                        text: 'Значение'
                     }
                 },
 
@@ -249,11 +255,19 @@
                     enabled: true
                 },
 
-                title: {
+                /*title: {
                     text: 'Вес'
-                },
+                },*/
 
                 navigator: {
+                    enabled: false
+                },
+
+                scrollbar: {
+                  enabled: false
+                },
+
+                credits: {
                     enabled: false
                 },
 
@@ -284,45 +298,43 @@
         });
     });
 
-    // Set the datepicker's date format
-    $.datepicker.setDefaults({
+    /*$.datepicker.setDefaults({
         dateFormat: 'mm/dd/yy',
         onSelect: function () {
             this.onchange();
             this.onblur();
         }
-    });
+    });*/
 
     $('.datepicker').pickadate({
-        //The title label to use for the month nav buttons
         labelMonthNext: 'Следующий месяц',
         labelMonthPrev: 'Последний месяц',
-//The title label to use for the dropdown selectors
         labelMonthSelect: 'Выберите месяц',
         labelYearSelect: 'Выберите год',
-//Months and weekdays
         monthsFull: [ 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' ],
         monthsShort: [ 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' ],
         weekdaysFull: [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота' ],
         weekdaysShort: [ 'ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ' ],
-//Materialize modified
         weekdaysLetter: [ 'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' ],
-//Today and clear
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 5, // Creates a dropdown of 5 years to control year,
+        selectMonths: true,
+        selectYears: 5,
         today: 'Сегодня',
         clear: 'Очистить',
         close: 'Выбрать',
-        closeOnSelect: false // Close upon selecting a date,
+        closeOnSelect: false
     });
-    $.datetimepicker.setLocale('ru');
+
+
+    //$('form #form1name_date, form #form2name_date').addClass("datepicker");
+
+    /*$.datetimepicker.setLocale('ru');
     $('form #form1name_date, form #form2name_date').datetimepicker(
         {
             formatDate:'d.m.Y',
             format:'d.m.Y H:i',
             lang:'ru',
         }
-    );
+    );*/
 
 
     </script>

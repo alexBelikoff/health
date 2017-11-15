@@ -15,10 +15,37 @@
                 <span>от: </span> {{ createdBy.lastName }} {{ createdBy.firstName }} {{ createdBy.secondName }}
             </blockquote>
 
-            {% if thread is defined%}
+            {% if thread is defined %}
                 {% for message in thread.messages %}
-                    <small>{{ message.createdAt|date("d.m.Y H:i") }}</small>
-                    <p style="font-size: smaller">{{ message.body }}</p>
+
+                    <div style="padding: 10px;
+                    {% if app.user.id == message.sender.id %}
+                    margin-left: 25px; background-color: rgba(154,207,234,0.2);
+                    {% else %}
+                    background-color: rgba(141,234,147,0.15);
+
+{% endif %}">
+                    <small>
+                    {% if app.user.id == message.sender.id %}
+                        {% if is_granted('ROLE_PATIENT') %}
+                            {{  app.user.patient.lastName }} {{ app.user.patient.firstName }} {{ app.user.patient.secondName }}
+                        {% elseif  is_granted('ROLE_DOCTOR') %}
+                            {{  app.user.doctor.lastName }} {{ app.user.doctor.firstName }} {{ app.user.doctor.secondName }}
+                        {% endif %}
+                    {% else %}
+
+                        {% if message.sender.patient is  not empty %}
+                            {{  message.sender.patient.lastName }} {{ message.sender.patient.firstName }} {{ message.sender.patient.secondName }}
+                        {% elseif  message.sender.doctor is  not empty %}
+                            {{  message.sender.doctor.lastName }} {{ message.sender.doctor.firstName }} {{ message.sender.doctor.secondName }}
+                        {% endif %}
+
+                    {% endif %}
+                        {{ message.createdAt|date("d.m.Y H:i") }}
+                    </small>
+                    <p style="font-size: smaller; margin-left: 10px;">{{ message.body }}</p>
+
+                    </div>
                 {% endfor %}
             {% endif %}
         </div>

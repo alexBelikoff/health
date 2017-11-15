@@ -425,6 +425,8 @@ class DefaultController extends Controller
     {
         $provider = $this->get('fos_message.provider');
         $thread = $provider->getThread($id);
+        $model = $this->get('health.thread_model');
+        $thread = $model->normalizeThreadMessages($thread);
         $threadUserCreated = $thread->getCreatedBy();
         $userCreated = $this->getDoctrine()
             ->getRepository(User::class)

@@ -1,3 +1,7 @@
 {% if unreadMessages is defined and unreadMessages > 0 %}
     <span class="new badge blue" data-badge-caption="новых">{{ unreadMessages }}</span>
 {% endif %}
+
+{% if unreadMessages is defined and unreadMessages < 0 %}
+    <span class="badge blue">{{ unreadMessages }}</span>
+{% endif %}

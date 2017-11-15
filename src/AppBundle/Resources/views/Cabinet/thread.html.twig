@@ -4,27 +4,46 @@
 {% endblock %}
 
 {% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <p class="flow-text">
+                <i class="large material-icons">question_answer</i>
+                <span>{{ thread.subject }}</span>
+            </p>
+            <blockquote>
+                <span>от: </span> {{ createdBy.lastName }} {{ createdBy.firstName }} {{ createdBy.secondName }}
+            </blockquote>
 
-    <h5>{{ thread.subject }}</h5>
-    <h5>{{ createdBy.lastName }} {{ createdBy.firstName }} {{ createdBy.secondName }}</h5>
+            {% if thread is defined%}
+                {% for message in thread.messages %}
+                    <small>{{ message.createdAt|date("d.m.Y H:i") }}</small>
+                    <p style="font-size: smaller">{{ message.body }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
 
-
-
-    {% if thread is defined%}
-        {% for message in thread.messages %}
-            <h5>{{ message.body }}</h5>
-            <h6>{{ message.createdAt|date("d.m.Y H:i") }}</h6>
-        {% endfor %}
-    {% endif %}
-
-
-        <h1>Ответить</h1>
-    <form method="post" action="{{ path('cabinet_message_reply', {'id': thread.id}) }}">
-
-        <textarea name="messages_body"></textarea>
-
-    <input type="submit" value="Ответить">
-
+        <div class="col s12">
+            <form class="col s12" method="post" action="{{ path('cabinet_message_reply', {'id': thread.id}) }}" id="send_message">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s12">
+                            <textarea id="textarea1" name="messages_body" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Ответ на сообщение</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <button class="btn lighten-1 waves-effect waves-light" type="submit" form="send_message">Отправить
+                            <i class="material-icons right">check</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascripts  %}

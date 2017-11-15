@@ -23,8 +23,8 @@
 			<li><a href="{{ path("cabinet_profile") }}">Профиль</a></li>
 			<li><a href="{{ path("cabinet_clients") }}">Мои пациенты</a></li>
 				<li><a href="{{ path("cabinet_messages") }}">Сообщения
-						{{ render(controller(
-                            'AppBundle:Default:getUnreadMessages')) }}</a></li>
+						<span class="new badge blue" data-badge-caption="новых">{{ render(controller(
+                            'AppBundle:Default:getUnreadMessages')) }}</span></a></li>
 			<li><a href="{{ path("fos_user_security_logout") }}">Выход</a></li>
 			{% endif %}
 		</ul>
